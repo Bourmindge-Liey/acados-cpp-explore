@@ -43,6 +43,124 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  if(EXISTS "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_solver_cartpole_model.so" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_solver_cartpole_model.so")
+    file(RPATH_CHECK
+         FILE "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_solver_cartpole_model.so"
+         RPATH "")
+  endif()
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_solver_cartpole_model.so")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  file(INSTALL DESTINATION "/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model" TYPE SHARED_LIBRARY FILES "/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/build/libacados_solver_cartpole_model.so")
+  if(EXISTS "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_solver_cartpole_model.so" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_solver_cartpole_model.so")
+    file(RPATH_CHANGE
+         FILE "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_solver_cartpole_model.so"
+         OLD_RPATH "/home/a/acados/lib:"
+         NEW_RPATH "")
+    if(CMAKE_INSTALL_DO_STRIP)
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_solver_cartpole_model.so")
+    endif()
+  endif()
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  if(EXISTS "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_ocp_solver_cartpole_model.so" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_ocp_solver_cartpole_model.so")
+    file(RPATH_CHECK
+         FILE "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_ocp_solver_cartpole_model.so"
+         RPATH "")
+  endif()
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_ocp_solver_cartpole_model.so")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  file(INSTALL DESTINATION "/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model" TYPE SHARED_LIBRARY FILES "/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/build/libacados_ocp_solver_cartpole_model.so")
+  if(EXISTS "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_ocp_solver_cartpole_model.so" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_ocp_solver_cartpole_model.so")
+    file(RPATH_CHANGE
+         FILE "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_ocp_solver_cartpole_model.so"
+         OLD_RPATH "/home/a/acados/lib:"
+         NEW_RPATH "")
+    if(CMAKE_INSTALL_DO_STRIP)
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_ocp_solver_cartpole_model.so")
+    endif()
+  endif()
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  if(EXISTS "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_cartpole_model" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_cartpole_model")
+    file(RPATH_CHECK
+         FILE "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_cartpole_model"
+         RPATH "")
+  endif()
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_cartpole_model")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  file(INSTALL DESTINATION "/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model" TYPE EXECUTABLE FILES "/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/build/main_cartpole_model")
+  if(EXISTS "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_cartpole_model" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_cartpole_model")
+    file(RPATH_CHANGE
+         FILE "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_cartpole_model"
+         OLD_RPATH "/home/a/acados/lib:"
+         NEW_RPATH "")
+    if(CMAKE_INSTALL_DO_STRIP)
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_cartpole_model")
+    endif()
+  endif()
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  if(EXISTS "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_sim_cartpole_model" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_sim_cartpole_model")
+    file(RPATH_CHECK
+         FILE "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_sim_cartpole_model"
+         RPATH "")
+  endif()
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_sim_cartpole_model")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  file(INSTALL DESTINATION "/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model" TYPE EXECUTABLE FILES "/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/build/main_sim_cartpole_model")
+  if(EXISTS "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_sim_cartpole_model" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_sim_cartpole_model")
+    file(RPATH_CHANGE
+         FILE "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_sim_cartpole_model"
+         OLD_RPATH "/home/a/acados/lib:"
+         NEW_RPATH "")
+    if(CMAKE_INSTALL_DO_STRIP)
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/main_sim_cartpole_model")
+    endif()
+  endif()
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   if(EXISTS "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_sim_solver_cartpole_model.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/libacados_sim_solver_cartpole_model.so")
     file(RPATH_CHECK

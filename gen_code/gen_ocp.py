@@ -4,7 +4,7 @@ project_root = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(project_root)
 
 from acados_template import AcadosOcp, AcadosOcpSolver, AcadosSimSolver
-from acados_template.builders import ocp_get_default_cmake_builder, sim_get_default_cmake_builder
+from acados_template.builders import CMakeBuilder
 from cartpole_model import create_model
 from cartpole_ocp import create_ocp
 
@@ -26,8 +26,15 @@ def gen_ocp(nmpc_options: dict) -> tuple[AcadosOcp, AcadosOcpSolver, AcadosSimSo
         ocp_options = yaml.load(f, yaml.FullLoader)
     ocp = create_ocp(model, ocp_options)
 
-    ocp_solver = AcadosOcpSolver(ocp, cmake_builder=ocp_get_default_cmake_builder())
-    sim_solver = AcadosSimSolver(ocp, cmake_builder=sim_get_default_cmake_builder())
+    cmake_builder = CMakeBuilder()
+    cmake_builder.options_on = ['BUILD_ACADOS_OCP_SOLVER_LIB', 
+                                'BUILD_ACADOS_SIM_SOLVER_LIB',
+                                'BUILD_EXAMPLE', 
+                                'BUILD_SIM_EXAMPLE',
+                                'BUILD_ACADOS_SOLVER_LIB' ]
+
+    ocp_solver = AcadosOcpSolver(ocp, cmake_builder=cmake_builder)
+    sim_solver = AcadosSimSolver(ocp, cmake_builder=cmake_builder)
     return ocp, ocp_solver, sim_solver
 
 
