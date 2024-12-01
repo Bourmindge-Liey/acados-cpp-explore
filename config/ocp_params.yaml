@@ -1,0 +1,17 @@
+'export_dir': "include/"
+
+
+'n_pred': 20
+'Ts': 0.05
+'Tf': 1.0
+
+'cost':
+  'cost_type': 'NONLINEAR_LS'
+  'cost_type_e': 'NONLINEAR_LS'
+
+  'Q_mat': [1.0e+3, 1.0e+3, 1.0e-2, 1.0e-2]
+  'R_mat': [1.0e-2]
+
+
+'integrator_type': 'IRK'
+'solver_type': 'SQP' # 'SQP_RTI'

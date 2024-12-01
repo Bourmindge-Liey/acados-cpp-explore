@@ -1,0 +1,3 @@
+'config_path': "config/"
+'model_param_file': 'model_params.yaml'
+'ocp_param_file': 'ocp_params.yaml'

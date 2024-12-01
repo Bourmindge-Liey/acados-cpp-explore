@@ -1,0 +1,38 @@
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/build/cartpole_model
+[  6%] [32mBuilding C object CMakeFiles/model_cartpole_model.dir/cartpole_model_model/cartpole_model_impl_dae_fun_jac_x_xdot_z.c.o[0m
+[ 12%] [32mBuilding C object CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_0_fun_jac_ut_xt.c.o[0m
+[ 18%] [32mBuilding C object CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_fun.c.o[0m
+[ 25%] [32mBuilding C object CMakeFiles/model_cartpole_model.dir/cartpole_model_model/cartpole_model_impl_dae_fun.c.o[0m
+[ 31%] [32mBuilding C object CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_hess.c.o[0m
+[ 37%] [32mBuilding C object CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_fun_jac_ut_xt.c.o[0m
+[ 43%] [32mBuilding C object CMakeFiles/model_cartpole_model.dir/cartpole_model_model/cartpole_model_impl_dae_jac_x_xdot_u_z.c.o[0m
+[ 50%] [32mBuilding C object CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_0_fun.c.o[0m
+[ 56%] [32mBuilding C object CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_e_fun_jac_ut_xt.c.o[0m
+[ 62%] [32mBuilding C object CMakeFiles/ocp_cartpole_model.dir/acados_solver_cartpole_model.c.o[0m
+[ 68%] [32mBuilding C object CMakeFiles/sim_cartpole_model.dir/acados_sim_solver_cartpole_model.c.o[0m
+[ 75%] [32mBuilding C object CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_0_hess.c.o[0m
+[ 81%] [32mBuilding C object CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_e_fun.c.o[0m
+[ 87%] [32mBuilding C object CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_e_hess.c.o[0m
+[ 87%] Built target sim_cartpole_model
+[ 87%] Built target model_cartpole_model
+[ 87%] Built target ocp_cartpole_model
+[ 93%] [32mBuilding C object CMakeFiles/main_cartpole_model.dir/main_cartpole_model.c.o[0m
+[100%] [32m[1mLinking C executable main_cartpole_model[0m
+[100%] Built target main_cartpole_model
+-- Install configuration: ""
+-- Installing: /home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/install/cartpole_model/main_cartpole_model
+-- Set runtime path of "/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model/install/cartpole_model/main_cartpole_model" to ""

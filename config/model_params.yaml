@@ -1,0 +1,7 @@
+'name': 'cartpole_model'
+
+
+'m_cart': 1.0  # mass of the cart [kg]
+'m_pole': 0.1  # mass of the pole [kg]
+'l_pole': 0.5  # length of the pole [m]
+'g': 9.81      # gravity [m/s^2]

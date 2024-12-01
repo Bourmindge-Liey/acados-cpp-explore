@@ -1,0 +1,200 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_0_fun.c.o"
+		},
+		{
+			"path" : "CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_0_fun_jac_ut_xt.c.o"
+		},
+		{
+			"path" : "CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_0_hess.c.o"
+		},
+		{
+			"path" : "CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_fun.c.o"
+		},
+		{
+			"path" : "CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_fun_jac_ut_xt.c.o"
+		},
+		{
+			"path" : "CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_hess.c.o"
+		},
+		{
+			"path" : "CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_e_fun.c.o"
+		},
+		{
+			"path" : "CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_e_fun_jac_ut_xt.c.o"
+		},
+		{
+			"path" : "CMakeFiles/ocp_cartpole_model.dir/cartpole_model_cost/cartpole_model_cost_y_e_hess.c.o"
+		},
+		{
+			"path" : "CMakeFiles/ocp_cartpole_model.dir/acados_solver_cartpole_model.c.o"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 93,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 117,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-fPIC -std=c99  "
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 2,
+					"path" : "/home/a/acados/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/a/acados/include/acados"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/a/acados/include/blasfeo/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/a/acados/include/hpipm/include"
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9
+			]
+		}
+	],
+	"id" : "ocp_cartpole_model::@6890427a1f51a3e7e1df",
+	"name" : "ocp_cartpole_model",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "cartpole_model_cost/cartpole_model_cost_y_0_fun.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "cartpole_model_cost/cartpole_model_cost_y_0_fun_jac_ut_xt.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "cartpole_model_cost/cartpole_model_cost_y_0_hess.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "cartpole_model_cost/cartpole_model_cost_y_fun.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "cartpole_model_cost/cartpole_model_cost_y_fun_jac_ut_xt.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "cartpole_model_cost/cartpole_model_cost_y_hess.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "cartpole_model_cost/cartpole_model_cost_y_e_fun.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "cartpole_model_cost/cartpole_model_cost_y_e_fun_jac_ut_xt.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "cartpole_model_cost/cartpole_model_cost_y_e_hess.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "acados_solver_cartpole_model.c",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "OBJECT_LIBRARY"
+}
