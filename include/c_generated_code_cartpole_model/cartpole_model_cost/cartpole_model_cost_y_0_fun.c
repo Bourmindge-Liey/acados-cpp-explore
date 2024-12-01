@@ -57,17 +57,27 @@ static const casadi_int casadi_s3[9] = {5, 1, 0, 5, 0, 1, 2, 3, 4};
 
 /* cartpole_model_cost_y_0_fun:(i0[4],i1,i2[],i3[],i4[])->(o0[5]) */
 static int casadi_f0(const casadi_real** arg, casadi_real** res, casadi_int* iw, casadi_real* w, int mem) {
-  casadi_real a0;
-  a0=arg[0]? arg[0][0] : 0;
-  if (res[0]!=0) res[0][0]=a0;
-  a0=arg[0]? arg[0][1] : 0;
-  if (res[0]!=0) res[0][1]=a0;
-  a0=arg[0]? arg[0][2] : 0;
-  if (res[0]!=0) res[0][2]=a0;
-  a0=arg[0]? arg[0][3] : 0;
-  if (res[0]!=0) res[0][3]=a0;
-  a0=arg[1]? arg[1][0] : 0;
-  if (res[0]!=0) res[0][4]=a0;
+  casadi_real w0;
+  /* #0: @0 = input[0][0] */
+  w0 = arg[0] ? arg[0][0] : 0;
+  /* #1: output[0][0] = @0 */
+  if (res[0]) res[0][0] = w0;
+  /* #2: @0 = input[0][1] */
+  w0 = arg[0] ? arg[0][1] : 0;
+  /* #3: output[0][1] = @0 */
+  if (res[0]) res[0][1] = w0;
+  /* #4: @0 = input[0][2] */
+  w0 = arg[0] ? arg[0][2] : 0;
+  /* #5: output[0][2] = @0 */
+  if (res[0]) res[0][2] = w0;
+  /* #6: @0 = input[0][3] */
+  w0 = arg[0] ? arg[0][3] : 0;
+  /* #7: output[0][3] = @0 */
+  if (res[0]) res[0][3] = w0;
+  /* #8: @0 = input[1][0] */
+  w0 = arg[1] ? arg[1][0] : 0;
+  /* #9: output[0][4] = @0 */
+  if (res[0]) res[0][4] = w0;
   return 0;
 }
 
@@ -147,17 +157,17 @@ CASADI_SYMBOL_EXPORT const casadi_int* cartpole_model_cost_y_0_fun_sparsity_out(
 
 CASADI_SYMBOL_EXPORT int cartpole_model_cost_y_0_fun_work(casadi_int *sz_arg, casadi_int* sz_res, casadi_int *sz_iw, casadi_int *sz_w) {
   if (sz_arg) *sz_arg = 5;
-  if (sz_res) *sz_res = 1;
+  if (sz_res) *sz_res = 2;
   if (sz_iw) *sz_iw = 0;
-  if (sz_w) *sz_w = 0;
+  if (sz_w) *sz_w = 1;
   return 0;
 }
 
 CASADI_SYMBOL_EXPORT int cartpole_model_cost_y_0_fun_work_bytes(casadi_int *sz_arg, casadi_int* sz_res, casadi_int *sz_iw, casadi_int *sz_w) {
   if (sz_arg) *sz_arg = 5*sizeof(const casadi_real*);
-  if (sz_res) *sz_res = 1*sizeof(casadi_real*);
+  if (sz_res) *sz_res = 2*sizeof(casadi_real*);
   if (sz_iw) *sz_iw = 0*sizeof(casadi_int);
-  if (sz_w) *sz_w = 0*sizeof(casadi_real);
+  if (sz_w) *sz_w = 1*sizeof(casadi_real);
   return 0;
 }
 

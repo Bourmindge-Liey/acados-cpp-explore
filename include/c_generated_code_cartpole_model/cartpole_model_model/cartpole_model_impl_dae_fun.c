@@ -29,6 +29,7 @@ extern "C" {
 #endif
 
 /* Add prefix to internal symbols */
+#define casadi_copy CASADI_PREFIX(copy)
 #define casadi_f0 CASADI_PREFIX(f0)
 #define casadi_s0 CASADI_PREFIX(s0)
 #define casadi_s1 CASADI_PREFIX(s1)
@@ -52,57 +53,113 @@ extern "C" {
 
 casadi_real casadi_sq(casadi_real x) { return x*x;}
 
+void casadi_copy(const casadi_real* x, casadi_int n, casadi_real* y) {
+  casadi_int i;
+  if (y) {
+    if (x) {
+      for (i=0; i<n; ++i) *y++ = *x++;
+    } else {
+      for (i=0; i<n; ++i) *y++ = 0.;
+    }
+  }
+}
+
 static const casadi_int casadi_s0[8] = {4, 1, 0, 4, 0, 1, 2, 3};
 static const casadi_int casadi_s1[5] = {1, 1, 0, 1, 0};
 static const casadi_int casadi_s2[3] = {0, 0, 0};
 
 /* cartpole_model_impl_dae_fun:(i0[4],i1[4],i2,i3[],i4[],i5[])->(o0[4]) */
 static int casadi_f0(const casadi_real** arg, casadi_real** res, casadi_int* iw, casadi_real* w, int mem) {
-  casadi_real a0, a1, a10, a2, a3, a4, a5, a6, a7, a8, a9;
-  a0=arg[1]? arg[1][0] : 0;
-  a1=-5.0000000000000003e-02;
-  a2=arg[0]? arg[0][1] : 0;
-  a3=sin(a2);
-  a4=(a1*a3);
-  a5=arg[0]? arg[0][3] : 0;
-  a6=casadi_sq(a5);
-  a4=(a4*a6);
-  a7=9.8100000000000009e-01;
-  a2=cos(a2);
-  a7=(a7*a2);
-  a7=(a7*a3);
-  a4=(a4+a7);
-  a7=arg[2]? arg[2][0] : 0;
-  a4=(a4+a7);
-  a8=1.;
-  a9=1.0000000000000001e-01;
-  a10=casadi_sq(a2);
-  a10=(a8-a10);
-  a9=(a9*a10);
-  a8=(a8+a9);
-  a4=(a4/a8);
-  a0=(a0-a4);
-  if (res[0]!=0) res[0][0]=a0;
-  a0=arg[1]? arg[1][1] : 0;
-  a0=(a0-a5);
-  if (res[0]!=0) res[0][1]=a0;
-  a0=arg[1]? arg[1][2] : 0;
-  a0=(a0-a4);
-  if (res[0]!=0) res[0][2]=a0;
-  a0=arg[1]? arg[1][3] : 0;
-  a1=(a1*a2);
-  a1=(a1*a3);
-  a1=(a1*a6);
-  a6=1.0791000000000002e+01;
-  a6=(a6*a3);
-  a1=(a1+a6);
-  a7=(a7*a2);
-  a1=(a1+a7);
-  a1=(a1/a8);
-  a8=5.0000000000000000e-01;
-  a1=(a1/a8);
-  a0=(a0-a1);
-  if (res[0]!=0) res[0][3]=a0;
+  casadi_int i;
+  casadi_real *rr;
+  const casadi_real *cs;
+  casadi_real w0, w1, w2, w3, *w4=w+4, w5, w6, w7, w8, w9, w10, *w11=w+14;
+  /* #0: @0 = input[1][0] */
+  w0 = arg[1] ? arg[1][0] : 0;
+  /* #1: @1 = input[1][1] */
+  w1 = arg[1] ? arg[1][1] : 0;
+  /* #2: @2 = input[1][2] */
+  w2 = arg[1] ? arg[1][2] : 0;
+  /* #3: @3 = input[1][3] */
+  w3 = arg[1] ? arg[1][3] : 0;
+  /* #4: @4 = vertcat(@0, @1, @2, @3) */
+  rr=w4;
+  *rr++ = w0;
+  *rr++ = w1;
+  *rr++ = w2;
+  *rr++ = w3;
+  /* #5: @0 = -0.05 */
+  w0 = -5.0000000000000003e-02;
+  /* #6: @1 = input[0][1] */
+  w1 = arg[0] ? arg[0][1] : 0;
+  /* #7: @2 = sin(@1) */
+  w2 = sin( w1 );
+  /* #8: @3 = (@0*@2) */
+  w3  = (w0*w2);
+  /* #9: @5 = input[0][3] */
+  w5 = arg[0] ? arg[0][3] : 0;
+  /* #10: @6 = sq(@5) */
+  w6 = casadi_sq( w5 );
+  /* #11: @3 = (@3*@6) */
+  w3 *= w6;
+  /* #12: @7 = 0.981 */
+  w7 = 9.8100000000000009e-01;
+  /* #13: @1 = cos(@1) */
+  w1 = cos( w1 );
+  /* #14: @7 = (@7*@1) */
+  w7 *= w1;
+  /* #15: @7 = (@7*@2) */
+  w7 *= w2;
+  /* #16: @3 = (@3+@7) */
+  w3 += w7;
+  /* #17: @7 = input[2][0] */
+  w7 = arg[2] ? arg[2][0] : 0;
+  /* #18: @3 = (@3+@7) */
+  w3 += w7;
+  /* #19: @8 = 1 */
+  w8 = 1.;
+  /* #20: @9 = 0.1 */
+  w9 = 1.0000000000000001e-01;
+  /* #21: @10 = sq(@1) */
+  w10 = casadi_sq( w1 );
+  /* #22: @10 = (@8-@10) */
+  w10  = (w8-w10);
+  /* #23: @9 = (@9*@10) */
+  w9 *= w10;
+  /* #24: @8 = (@8+@9) */
+  w8 += w9;
+  /* #25: @3 = (@3/@8) */
+  w3 /= w8;
+  /* #26: @0 = (@0*@1) */
+  w0 *= w1;
+  /* #27: @0 = (@0*@2) */
+  w0 *= w2;
+  /* #28: @0 = (@0*@6) */
+  w0 *= w6;
+  /* #29: @6 = 10.791 */
+  w6 = 1.0791000000000002e+01;
+  /* #30: @6 = (@6*@2) */
+  w6 *= w2;
+  /* #31: @0 = (@0+@6) */
+  w0 += w6;
+  /* #32: @7 = (@7*@1) */
+  w7 *= w1;
+  /* #33: @0 = (@0+@7) */
+  w0 += w7;
+  /* #34: @0 = (@0/@8) */
+  w0 /= w8;
+  /* #35: @0 = (2.*@0) */
+  w0 = (2.* w0 );
+  /* #36: @11 = vertcat(@3, @5, @3, @0) */
+  rr=w11;
+  *rr++ = w3;
+  *rr++ = w5;
+  *rr++ = w3;
+  *rr++ = w0;
+  /* #37: @4 = (@4-@11) */
+  for (i=0, rr=w4, cs=w11; i<4; ++i) (*rr++) -= (*cs++);
+  /* #38: output[0][0] = @4 */
+  casadi_copy(w4, 4, res[0]);
   return 0;
 }
 
@@ -183,18 +240,18 @@ CASADI_SYMBOL_EXPORT const casadi_int* cartpole_model_impl_dae_fun_sparsity_out(
 }
 
 CASADI_SYMBOL_EXPORT int cartpole_model_impl_dae_fun_work(casadi_int *sz_arg, casadi_int* sz_res, casadi_int *sz_iw, casadi_int *sz_w) {
-  if (sz_arg) *sz_arg = 6;
-  if (sz_res) *sz_res = 1;
+  if (sz_arg) *sz_arg = 10;
+  if (sz_res) *sz_res = 2;
   if (sz_iw) *sz_iw = 0;
-  if (sz_w) *sz_w = 0;
+  if (sz_w) *sz_w = 18;
   return 0;
 }
 
 CASADI_SYMBOL_EXPORT int cartpole_model_impl_dae_fun_work_bytes(casadi_int *sz_arg, casadi_int* sz_res, casadi_int *sz_iw, casadi_int *sz_w) {
-  if (sz_arg) *sz_arg = 6*sizeof(const casadi_real*);
-  if (sz_res) *sz_res = 1*sizeof(casadi_real*);
+  if (sz_arg) *sz_arg = 10*sizeof(const casadi_real*);
+  if (sz_res) *sz_res = 2*sizeof(casadi_real*);
   if (sz_iw) *sz_iw = 0*sizeof(casadi_int);
-  if (sz_w) *sz_w = 0*sizeof(casadi_real);
+  if (sz_w) *sz_w = 18*sizeof(casadi_real);
   return 0;
 }
 

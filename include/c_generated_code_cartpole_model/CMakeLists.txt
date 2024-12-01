@@ -38,7 +38,7 @@ project(cartpole_model)
 
 option(BUILD_ACADOS_SOLVER_LIB "Should the solver library acados_solver_cartpole_model be build?" OFF)
 option(BUILD_ACADOS_OCP_SOLVER_LIB "Should the OCP solver library acados_ocp_solver_cartpole_model be build?" OFF)
-option(BUILD_EXAMPLE "Should the example main_cartpole_model be build?" ON)
+option(BUILD_EXAMPLE "Should the example main_cartpole_model be build?" OFF)
 option(BUILD_SIM_EXAMPLE "Should the simulation example main_sim_cartpole_model be build?" OFF)
 option(BUILD_ACADOS_SIM_SOLVER_LIB "Should the simulation solver library acados_sim_solver_cartpole_model be build?" OFF)
 

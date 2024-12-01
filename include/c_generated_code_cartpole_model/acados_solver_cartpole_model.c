@@ -572,6 +572,37 @@ void cartpole_model_acados_setup_nlp_in(cartpole_model_solver_capsule* capsule, 
 
 
 
+    // set up general constraints for stage 0 to N-1
+    double* D = calloc(NG*NU, sizeof(double));
+    double* C = calloc(NG*NX, sizeof(double));
+    double* lug = calloc(2*NG, sizeof(double));
+    double* lg = lug;
+    double* ug = lug + NG;
+
+    
+
+    
+    C[0+NG * 0] = 1;
+    C[1+NG * 2] = 1;
+
+    
+    lg[0] = -10;
+    lg[1] = -10;
+
+    
+    ug[0] = 10;
+    ug[1] = 10;
+
+    for (int i = 0; i < N; i++)
+    {
+        ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, i, "D", D);
+        ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, i, "C", C);
+        ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, i, "lg", lg);
+        ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, i, "ug", ug);
+    }
+    free(D);
+    free(C);
+    free(lug);
 
 
 
@@ -579,6 +610,22 @@ void cartpole_model_acados_setup_nlp_in(cartpole_model_solver_capsule* capsule, 
 
     /* terminal constraints */
 
+    // set up bounds for last stage
+    // x
+    int* idxbx_e = malloc(NBXN * sizeof(int));
+    
+    idxbx_e[0] = 0;
+    double* lubx_e = calloc(2*NBXN, sizeof(double));
+    double* lbx_e = lubx_e;
+    double* ubx_e = lubx_e + NBXN;
+    
+    lbx_e[0] = -5;
+    ubx_e[0] = 5;
+    ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, N, "idxbx", idxbx_e);
+    ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, N, "lbx", lbx_e);
+    ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, N, "ubx", ubx_e);
+    free(idxbx_e);
+    free(lubx_e);
 
 
 

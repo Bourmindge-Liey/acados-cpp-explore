@@ -29,7 +29,10 @@ extern "C" {
 #endif
 
 /* Add prefix to internal symbols */
+#define casadi_clear CASADI_PREFIX(clear)
+#define casadi_copy CASADI_PREFIX(copy)
 #define casadi_f0 CASADI_PREFIX(f0)
+#define casadi_fill CASADI_PREFIX(fill)
 #define casadi_s0 CASADI_PREFIX(s0)
 #define casadi_s1 CASADI_PREFIX(s1)
 #define casadi_s2 CASADI_PREFIX(s2)
@@ -50,6 +53,31 @@ extern "C" {
   #endif
 #endif
 
+void casadi_clear(casadi_real* x, casadi_int n) {
+  casadi_int i;
+  if (x) {
+    for (i=0; i<n; ++i) *x++ = 0;
+  }
+}
+
+void casadi_fill(casadi_real* x, casadi_int n, casadi_real alpha) {
+  casadi_int i;
+  if (x) {
+    for (i=0; i<n; ++i) *x++ = alpha;
+  }
+}
+
+void casadi_copy(const casadi_real* x, casadi_int n, casadi_real* y) {
+  casadi_int i;
+  if (y) {
+    if (x) {
+      for (i=0; i<n; ++i) *y++ = *x++;
+    } else {
+      for (i=0; i<n; ++i) *y++ = 0.;
+    }
+  }
+}
+
 static const casadi_int casadi_s0[8] = {4, 1, 0, 4, 0, 1, 2, 3};
 static const casadi_int casadi_s1[3] = {0, 0, 0};
 static const casadi_int casadi_s2[11] = {4, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3};
@@ -57,20 +85,32 @@ static const casadi_int casadi_s3[3] = {4, 0, 0};
 
 /* cartpole_model_cost_y_e_fun_jac_ut_xt:(i0[4],i1[],i2[],i3[],i4[])->(o0[4],o1[4x4,4nz],o2[4x0]) */
 static int casadi_f0(const casadi_real** arg, casadi_real** res, casadi_int* iw, casadi_real* w, int mem) {
-  casadi_real a0;
-  a0=arg[0]? arg[0][0] : 0;
-  if (res[0]!=0) res[0][0]=a0;
-  a0=arg[0]? arg[0][1] : 0;
-  if (res[0]!=0) res[0][1]=a0;
-  a0=arg[0]? arg[0][2] : 0;
-  if (res[0]!=0) res[0][2]=a0;
-  a0=arg[0]? arg[0][3] : 0;
-  if (res[0]!=0) res[0][3]=a0;
-  a0=1.;
-  if (res[1]!=0) res[1][0]=a0;
-  if (res[1]!=0) res[1][1]=a0;
-  if (res[1]!=0) res[1][2]=a0;
-  if (res[1]!=0) res[1][3]=a0;
+  casadi_real *rr, *ss;
+  casadi_real w0, *w1=w+1, *w2=w+5;
+  /* #0: @0 = input[0][0] */
+  w0 = arg[0] ? arg[0][0] : 0;
+  /* #1: output[0][0] = @0 */
+  if (res[0]) res[0][0] = w0;
+  /* #2: @0 = input[0][1] */
+  w0 = arg[0] ? arg[0][1] : 0;
+  /* #3: output[0][1] = @0 */
+  if (res[0]) res[0][1] = w0;
+  /* #4: @0 = input[0][2] */
+  w0 = arg[0] ? arg[0][2] : 0;
+  /* #5: output[0][2] = @0 */
+  if (res[0]) res[0][2] = w0;
+  /* #6: @0 = input[0][3] */
+  w0 = arg[0] ? arg[0][3] : 0;
+  /* #7: output[0][3] = @0 */
+  if (res[0]) res[0][3] = w0;
+  /* #8: @1 = zeros(4x4,4nz) */
+  casadi_clear(w1, 4);
+  /* #9: @2 = ones(4x1) */
+  casadi_fill(w2, 4, 1.);
+  /* #10: (@1[:4] = @2) */
+  for (rr=w1+0, ss=w2; rr!=w1+4; rr+=1) *rr = *ss++;
+  /* #11: output[1][0] = @1 */
+  casadi_copy(w1, 4, res[1]);
   return 0;
 }
 
@@ -153,18 +193,18 @@ CASADI_SYMBOL_EXPORT const casadi_int* cartpole_model_cost_y_e_fun_jac_ut_xt_spa
 }
 
 CASADI_SYMBOL_EXPORT int cartpole_model_cost_y_e_fun_jac_ut_xt_work(casadi_int *sz_arg, casadi_int* sz_res, casadi_int *sz_iw, casadi_int *sz_w) {
-  if (sz_arg) *sz_arg = 5;
-  if (sz_res) *sz_res = 3;
+  if (sz_arg) *sz_arg = 7;
+  if (sz_res) *sz_res = 4;
   if (sz_iw) *sz_iw = 0;
-  if (sz_w) *sz_w = 0;
+  if (sz_w) *sz_w = 9;
   return 0;
 }
 
 CASADI_SYMBOL_EXPORT int cartpole_model_cost_y_e_fun_jac_ut_xt_work_bytes(casadi_int *sz_arg, casadi_int* sz_res, casadi_int *sz_iw, casadi_int *sz_w) {
-  if (sz_arg) *sz_arg = 5*sizeof(const casadi_real*);
-  if (sz_res) *sz_res = 3*sizeof(casadi_real*);
+  if (sz_arg) *sz_arg = 7*sizeof(const casadi_real*);
+  if (sz_res) *sz_res = 4*sizeof(casadi_real*);
   if (sz_iw) *sz_iw = 0*sizeof(casadi_int);
-  if (sz_w) *sz_w = 0*sizeof(casadi_real);
+  if (sz_w) *sz_w = 9*sizeof(casadi_real);
   return 0;
 }
 

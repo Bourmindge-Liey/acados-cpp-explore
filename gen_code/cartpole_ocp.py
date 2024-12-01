@@ -19,6 +19,18 @@ def create_ocp(model: AcadosModel, ocp_options: dict) -> AcadosOcp:
 
     ocp.constraints.x0 = np.zeros(model.x.size()[0])
 
+    # lg < Cx + Du < ug
+    ocp.constraints.C = np.array([[1, 0, 0, 0], 
+                                  [0, 0, 1, 0]])
+    ocp.constraints.D = np.zeros([2,1])
+    ocp.constraints.lg = np.ones(2) * -10
+    ocp.constraints.ug = np.ones(2) * 10
+
+    # lb_e < x_e < ub_e
+    ocp.constraints.lbx_e = np.array([-5])
+    ocp.constraints.ubx_e = np.array([5])
+    ocp.constraints.idxbx_e = np.array([0])
+
     ############################# costs ################################
     x = ocp.model.x
     u = ocp.model.u

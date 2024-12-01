@@ -4,9 +4,29 @@
     "casadi_pool_names": [],
     "code_export_directory": "/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model",
     "constraints": {
-        "C": [],
+        "C": [
+            [
+                1,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                1,
+                0
+            ]
+        ],
         "C_e": [],
-        "D": [],
+        "D": [
+            [
+                0.0
+            ],
+            [
+                0.0
+            ]
+        ],
         "constr_type": "BGH",
         "constr_type_0": "BGH",
         "constr_type_e": "BGH",
@@ -21,7 +41,9 @@
             2,
             3
         ],
-        "idxbx_e": [],
+        "idxbx_e": [
+            0
+        ],
         "idxbxe_0": [
             0,
             1,
@@ -49,8 +71,13 @@
             0.0,
             0.0
         ],
-        "lbx_e": [],
-        "lg": [],
+        "lbx_e": [
+            -5
+        ],
+        "lg": [
+            -10.0,
+            -10.0
+        ],
         "lg_e": [],
         "lh": [],
         "lh_0": [],
@@ -79,8 +106,13 @@
             0.0,
             0.0
         ],
-        "ubx_e": [],
-        "ug": [],
+        "ubx_e": [
+            5
+        ],
+        "ug": [
+            10.0,
+            10.0
+        ],
         "ug_e": [],
         "uh": [],
         "uh_0": [],
@@ -262,9 +294,9 @@
         "nbu": 1,
         "nbx": 0,
         "nbx_0": 4,
-        "nbx_e": 0,
+        "nbx_e": 1,
         "nbxe_0": 4,
-        "ng": 0,
+        "ng": 2,
         "ng_e": 0,
         "nh": 0,
         "nh_0": 0,
@@ -327,9 +359,9 @@
         "cost_r_in_psi_expr": null,
         "cost_r_in_psi_expr_0": null,
         "cost_r_in_psi_expr_e": null,
-        "cost_y_expr": "jhpnnagiieahaaaadaaaaaaaaaaaaaaaaaegjaaaaaaaaaaaaaaafaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaacaaaaaaaaaaaaaaadaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaafaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaadaaaaaaaahpgdhegpcaaaaaaaaaaaaaadaaaaaaaahigjgegpcaaaaaaaaaaaaaafaaaaaaaegpfahpgdhegpcaaaaaaaaaaaaaafaaaaaaaegpfahigjgegpcaaaaaaaaaaaaaadaaaaaaafhpfgg",
-        "cost_y_expr_0": "jhpnnagiieahaaaadaaaaaaaaaaaaaaaaaegjaaaaaaaaaaaaaaafaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaacaaaaaaaaaaaaaaadaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaafaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaadaaaaaaaahpgdhegpcaaaaaaaaaaaaaadaaaaaaaahigjgegpcaaaaaaaaaaaaaafaaaaaaaegpfahpgdhegpcaaaaaaaaaaaaaafaaaaaaaegpfahigjgegpcaaaaaaaaaaaaaadaaaaaaafhpfgg",
-        "cost_y_expr_e": "jhpnnagiieahaaaadaaaaaaaaaaaaaaaaaegiaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaacaaaaaaaaaaaaaaadaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaadaaaaaaaahpgdhegpcaaaaaaaaaaaaaadaaaaaaaahigjgegpcaaaaaaaaaaaaaafaaaaaaaegpfahpgdhegpcaaaaaaaaaaaaaafaaaaaaaegpfahigjg",
+        "cost_y_expr": "vertcat(pos, phi, d_pos, d_phi, u_f)",
+        "cost_y_expr_0": "vertcat(pos, phi, d_pos, d_phi, u_f)",
+        "cost_y_expr_e": "vertcat(pos, phi, d_pos, d_phi)",
         "disc_dyn_expr": null,
         "dyn_disc_fun": null,
         "dyn_disc_fun_jac": null,
@@ -339,24 +371,24 @@
         "dyn_impl_dae_fun": null,
         "dyn_impl_dae_fun_jac": null,
         "dyn_impl_dae_jac": null,
-        "f_expl_expr": "jhpnnagiieahaaaadaaaaaaaaaaaaaaaaaegiaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaacaaaaaaaaaaaaaaadaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaegeaaaaaaaaaaaaaaaegbaaaaaaaaaaaaaaaegbaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaaegmcaaaaaaaaaaaaaachkjjjjjjjjjjjjkplegnaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaadaaaaaaaahigjgeglaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaafaaaaaaaegpfahigjgegdaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaaegmcaaaaaaaaaaaaaachcdiamkmbkfegpopdegoaaaaaaaaaaaaaaachcaaaaaaaaaaaaaaaegnaaaaaaaaaaaaaaachcaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaadaaaaaaafhpfggegbaaaaaaaaaaaaaaaegmcaaaaaaaaaaaaaabdegdaaaaaaaaaaaaaaaegmcaaaaaaaaaaaaaachkjjjjjjjjjjjjlpdegcaaaaaaaaaaaaaaachabaaaaaaaaaaaaaaeglaaaaaaaaaaaaaaaegoaaaaaaaaaaaaaaachcaaaaaaaaaaaaaaachfaaaaaaaaaaaaaaachhbaaaaaaaaaaaaaaegeaaaaaaaaaaaaaaaegeaaaaaaaaaaaaaaaegbaaaaaaaaaaaaaaaegbaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaachbaaaaaaaaaaaaaaaegoaaaaaaaaaaaaaaachcaaaaaaaaaaaaaaaegnaaaaaaaaaaaaaaachcaaaaaaaaaaaaaaaeglaaaaaaaaaaaaaaachfaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaaegmcaaaaaaaaaaaaaachdkfegldpnpejfcaeegnaaaaaaaaaaaaaaachcaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaachoaaaaaaaaaaaaaaaegoaaaaaaaaaaaaaaachcaaaaaaaaaaaaaaachgbaaaaaaaaaaaaaaegmcaaaaaaaaaaaaaachaaaaaaaaaaaaaopd",
-        "f_impl_expr": "jhpnnagiieahaaaadaaaaaaaaaaaaaaaaaegiaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaacaaaaaaaaaaaaaaadaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaegcaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaahaaaaaaaahpgdhpfegpgehegeaaaaaaaaaaaaaaaegbaaaaaaaaaaaaaaaegbaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaaegmcaaaaaaaaaaaaaachkjjjjjjjjjjjjkplegnaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaadaaaaaaaahigjgeglaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaafaaaaaaaegpfahigjgegdaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaaegmcaaaaaaaaaaaaaachcdiamkmbkfegpopdegoaaaaaaaaaaaaaaachdaaaaaaaaaaaaaaaegnaaaaaaaaaaaaaaachdaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaadaaaaaaafhpfggegbaaaaaaaaaaaaaaaegmcaaaaaaaaaaaaaabdegdaaaaaaaaaaaaaaaegmcaaaaaaaaaaaaaachkjjjjjjjjjjjjlpdegcaaaaaaaaaaaaaaachbbaaaaaaaaaaaaaaeglaaaaaaaaaaaaaaaegoaaaaaaaaaaaaaaachdaaaaaaaaaaaaaaaegcaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaahaaaaaaaahigjgpfegpgehchgaaaaaaaaaaaaaaaegcaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaajaaaaaaaegpfahpgdhpfegpgehchibaaaaaaaaaaaaaaegcaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaajaaaaaaaegpfahigjgpfegpgehegeaaaaaaaaaaaaaaaegeaaaaaaaaaaaaaaaegbaaaaaaaaaaaaaaaegbaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaachcaaaaaaaaaaaaaaaegoaaaaaaaaaaaaaaachdaaaaaaaaaaaaaaaegnaaaaaaaaaaaaaaachdaaaaaaaaaaaaaaaeglaaaaaaaaaaaaaaachgaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaaegmcaaaaaaaaaaaaaachdkfegldpnpejfcaeegnaaaaaaaaaaaaaaachdaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaachpaaaaaaaaaaaaaaaegoaaaaaaaaaaaaaaachdaaaaaaaaaaaaaaachhbaaaaaaaaaaaaaaegmcaaaaaaaaaaaaaachaaaaaaaaaaaaaopd",
+        "f_expl_expr": "@1=(1+(0.1*(1-sq(cos(phi))))), @2=(((((-0.05*sin(phi))*sq(d_phi))+((0.981*cos(phi))*sin(phi)))+u_f)/@1), vertcat(@2, d_phi, @2, (2.*((((((-0.05*cos(phi))*sin(phi))*sq(d_phi))+(10.791*sin(phi)))+(u_f*cos(phi)))/@1)))",
+        "f_impl_expr": "@1=(1+(0.1*(1-sq(cos(phi))))), @2=(((((-0.05*sin(phi))*sq(d_phi))+((0.981*cos(phi))*sin(phi)))+u_f)/@1), (vertcat(pos_dot, phi_dot, d_pos_dot, d_phi_dot)-vertcat(@2, d_phi, @2, (2.*((((((-0.05*cos(phi))*sin(phi))*sq(d_phi))+(10.791*sin(phi)))+(u_f*cos(phi)))/@1))))",
         "gnsf_nontrivial_f_LO": 1,
         "gnsf_purely_linear": 0,
         "name": "cartpole_model",
         "nu_original": null,
-        "p": "jhpnnagiieahaaaadaaaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "p": "0x0",
         "p_global": null,
         "t": [],
         "t0": null,
         "t_label": "t",
-        "u": "jhpnnagiieahaaaadaaaaaaaaaaaaaaaaaegfaaaaaaaaaaaaaaabaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaadaaaaaaafhpfgg",
+        "u": "u_f",
         "u_labels": null,
-        "x": "jhpnnagiieahaaaadaaaaaaaaaaaaaaaaaegiaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaacaaaaaaaaaaaaaaadaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaadaaaaaaaahpgdhegpcaaaaaaaaaaaaaadaaaaaaaahigjgegpcaaaaaaaaaaaaaafaaaaaaaegpfahpgdhegpcaaaaaaaaaaaaaafaaaaaaaegpfahigjg",
+        "x": "vertcat(pos, phi, d_pos, d_phi)",
         "x_labels": null,
-        "xdot": "jhpnnagiieahaaaadaaaaaaaaaaaaaaaaaegiaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaacaaaaaaaaaaaaaaadaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaahaaaaaaaahpgdhpfegpgehegpcaaaaaaaaaaaaaahaaaaaaaahigjgpfegpgehegpcaaaaaaaaaaaaaajaaaaaaaegpfahpgdhpfegpgehegpcaaaaaaaaaaaaaajaaaaaaaegpfahigjgpfegpgeh",
-        "y_ref": "jhpnnagiieahaaaadaaaaaaaaaaaaaaaaaegiaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaacaaaaaaaaaaaaaaadaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaegpcaaaaaaaaaaaaaadaaaaaaaahpgdhegpcaaaaaaaaaaaaaaiaaaaaaaahigjgpfhhchbgahegpcaaaaaaaaaaaaaafaaaaaaaegpfahpgdhegpcaaaaaaaaaaaaaafaaaaaaaegpfahigjg",
-        "z": "jhpnnagiieahaaaadaaaaaaaaaaaaaaaaaegdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        "xdot": "vertcat(pos_dot, phi_dot, d_pos_dot, d_phi_dot)",
+        "y_ref": "vertcat(pos, phi_wrap, d_pos, d_phi)",
+        "z": "0x0"
     },
     "name": "cartpole_model",
     "parameter_values": [],

@@ -57,8 +57,8 @@
 #define CARTPOLE_MODEL_NS     0
 #define CARTPOLE_MODEL_NS0    0
 #define CARTPOLE_MODEL_NSN    0
-#define CARTPOLE_MODEL_NG     0
-#define CARTPOLE_MODEL_NBXN   0
+#define CARTPOLE_MODEL_NG     2
+#define CARTPOLE_MODEL_NBXN   1
 #define CARTPOLE_MODEL_NGN    0
 #define CARTPOLE_MODEL_NY0    5
 #define CARTPOLE_MODEL_NY     5

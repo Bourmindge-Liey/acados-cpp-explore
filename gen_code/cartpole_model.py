@@ -1,7 +1,7 @@
 import os
 import yaml
 
-from casadi import SX, vertcat, sin, cos, fmod, pi
+from casadi import MX, vertcat, sin, cos, fmod, pi
 from acados_template import AcadosModel
 
 def create_model(model_options: dict) -> AcadosModel:
@@ -13,22 +13,22 @@ def create_model(model_options: dict) -> AcadosModel:
     g = model_options['g']
 
     ###################### states ####################### 
-    pos = SX.sym("pos")         # position of the cart [m]
-    phi = SX.sym("phi")         # angle of the pole [rad]
-    d_pos = SX.sym("d_pos")     # velocity of the cart [m/s]
-    d_phi = SX.sym("d_phi")     # angular velocity of the pole [rad/s]
-    phi_wrap = SX.sym("phi_wrap")
+    pos = MX.sym("pos")         # position of the cart [m]
+    phi = MX.sym("phi")         # angle of the pole [rad]
+    d_pos = MX.sym("d_pos")     # velocity of the cart [m/s]
+    d_phi = MX.sym("d_phi")     # angular velocity of the pole [rad/s]
+    phi_wrap = MX.sym("phi_wrap")
     x = vertcat(pos, phi, d_pos, d_phi)   
     y_ref = vertcat(pos, phi_wrap, d_pos, d_phi)  
     ##################### input ###################
-    u_f = SX.sym("u_f")     # horizontal force applied on cart [N]
+    u_f = MX.sym("u_f")     # horizontal force applied on cart [N]
     u = vertcat(u_f)
 
     ###################### derivatives ###############
-    pos_dot = SX.sym("pos_dot")
-    phi_dot = SX.sym("phi_dot")
-    d_pos_dot = SX.sym("d_pos_dot")
-    d_phi_dot = SX.sym("d_phi_dot")
+    pos_dot = MX.sym("pos_dot")
+    phi_dot = MX.sym("phi_dot")
+    d_pos_dot = MX.sym("d_pos_dot")
+    d_phi_dot = MX.sym("d_phi_dot")
     xdot = vertcat(pos_dot, phi_dot, d_pos_dot, d_phi_dot)
 
     ####################### parameters ######################
