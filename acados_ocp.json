@@ -2,7 +2,7 @@
     "acados_include_path": "/home/a/acados/include",
     "acados_lib_path": "/home/a/acados/lib",
     "casadi_pool_names": [],
-    "code_export_directory": "/home/a/ssaa/acados_cpp/include/c_generated_code_cartpole_model",
+    "code_export_directory": "/home/a/ssaa/acados_cpp/src/rmpc/include/c_generated_code_cartpole_model",
     "constraints": {
         "C": [
             [
