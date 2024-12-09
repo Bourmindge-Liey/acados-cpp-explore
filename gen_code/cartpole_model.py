@@ -19,6 +19,7 @@ def create_model(model_options: dict) -> AcadosModel:
     d_phi = MX.sym("d_phi")     # angular velocity of the pole [rad/s]
     phi_wrap = MX.sym("phi_wrap")
     x = vertcat(pos, phi, d_pos, d_phi)   
+
     y_ref = vertcat(pos, phi_wrap, d_pos, d_phi)  
     ##################### input ###################
     u_f = MX.sym("u_f")     # horizontal force applied on cart [N]
@@ -60,6 +61,7 @@ def create_model(model_options: dict) -> AcadosModel:
     model.z = z 
     model.f_expl_expr = f_expl
     model.f_impl_expr = f_impl
+    
     model.y_ref = y_ref
 
     return model

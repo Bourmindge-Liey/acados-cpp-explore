@@ -22,7 +22,7 @@ def create_ocp(model: AcadosModel, ocp_options: dict) -> AcadosOcp:
     # lg < Cx + Du < ug
     ocp.constraints.C = np.array([[1, 0, 0, 0], 
                                   [0, 0, 1, 0]])
-    ocp.constraints.D = np.zeros([2,1])
+    ocp.constraints.D = np.zeros([2, 1])
     ocp.constraints.lg = np.ones(2) * -10
     ocp.constraints.ug = np.ones(2) * 10
 
