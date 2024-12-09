@@ -41,11 +41,23 @@ void RMPC::control(double x[NX], double u[NX]) {
     ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, 0, "lbx", x);
     ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, 0, "ubx", x);
 
-    // solve
-    status = cartpole_model_acados_solve(acados_ocp_capsule);
-    if (status) {
-        printf("acados returned status %d. Exiting.\n", status);
-        exit(1);
+
+    for (int ii = 0; ii < 1; ii++) {
+        int rti_phase = 0;
+        for (int i = 0; i < N_STEPS; i++)
+            {
+                ocp_nlp_out_set(nlp_config, nlp_dims, nlp_out, i, "x", x);
+                ocp_nlp_out_set(nlp_config, nlp_dims, nlp_out, i, "u", u);
+            }
+            ocp_nlp_out_set(nlp_config, nlp_dims, nlp_out, N, "x", x);
+            ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "rti_phase", &rti_phase);
+
+        // solve
+        status = cartpole_model_acados_solve(acados_ocp_capsule);
+        if (status) {
+            printf("acados returned status %d. Exiting.\n", status);
+            exit(1);
+        }
     }
 
     // // get solution
@@ -56,6 +68,7 @@ void RMPC::control(double x[NX], double u[NX]) {
         ocp_nlp_out_get(nlp_config, nlp_dims, nlp_out, i, "u", u_pred);
     }
     ocp_nlp_out_get(nlp_config, nlp_dims, nlp_out, N_STEPS, "x", x_pred);
+    
 }
 
 

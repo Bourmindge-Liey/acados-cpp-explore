@@ -26,6 +26,7 @@ public:
 
     void set_state(double x[NX]);
     void step(double u0[NU], double x_next[NX]);
+    void print_record(int begin, int end);
 
 private:
     // solver components

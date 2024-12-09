@@ -1,0 +1,12 @@
+Ts: 0.05
+
+integrator_type: 'ERK'
+num_stages: 4
+num_steps: 1
+newton_iter: 3
+newton_tol: 1e-8
+sens_forw: true
+sens_adj: false
+sens_hess: false
+output_z: false
+jac_reuse: false

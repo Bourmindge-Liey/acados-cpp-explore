@@ -5,7 +5,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-
+set(CMAKE_BUILD_TYPE Debug)
 ####################### find dependencies #####################
 set(PKG_DEPENDENCIES
   ament_cmake
@@ -133,7 +133,6 @@ install(
   RUNTIME DESTINATION bin
   INCLUDES DESTINATION include
 )
-
 
 set(CONTROL_SIM_NAME control_cartpole_model)
 add_executable(${CONTROL_SIM_NAME} src/run_control_sim.cpp)

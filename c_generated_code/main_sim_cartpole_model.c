@@ -65,16 +65,23 @@ int main()
     double x_current[NX];
     x_current[0] = 0.0;
     x_current[1] = 0.0;
-    x_current[2] = 0.1;
+    x_current[2] = 0.0;
     x_current[3] = 0.0;
+
+  
+    printf("main_sim: initial state not defined, should be in lbx_0, using zero vector.");
 
 
     // initial value for control input
     double u0[NU];
-    u0[0] = 0.1;
+    u0[0] = 0.0;
+
+  
+    double S_forw[NX*(NX+NU)];
+  
 
 
-    int n_sim_steps = 100;
+    int n_sim_steps = 3;
     // solve ocp in loop
     for (int ii = 0; ii < n_sim_steps; ii++)
     {
@@ -95,6 +102,19 @@ int main()
         sim_out_get(acados_sim_config, acados_sim_dims,
                acados_sim_out, "x", x_current);
 
+    
+        sim_out_get(acados_sim_config, acados_sim_dims,
+               acados_sim_out, "S_forw", S_forw);
+
+        printf("\nS_forw, %d\n", ii);
+        for (int i = 0; i < NX; i++)
+        {
+            for (int j = 0; j < NX+NU; j++)
+            {
+                printf("%+.3e ", S_forw[j * NX + i]);
+            }
+            printf("\n");
+        }
     
 
         // print solution
