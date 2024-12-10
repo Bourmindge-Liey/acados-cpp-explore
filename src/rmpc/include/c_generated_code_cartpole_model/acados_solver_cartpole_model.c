@@ -442,8 +442,8 @@ void cartpole_model_acados_setup_nlp_in(cartpole_model_solver_capsule* capsule, 
    double* W_0 = calloc(NY0*NY0, sizeof(double));
     // change only the non-zero elements:
     W_0[0+(NY0) * 0] = 1000;
-    W_0[1+(NY0) * 1] = 1000;
-    W_0[2+(NY0) * 2] = 0.01;
+    W_0[1+(NY0) * 1] = 1;
+    W_0[2+(NY0) * 2] = 0.001;
     W_0[3+(NY0) * 3] = 0.01;
     W_0[4+(NY0) * 4] = 0.01;
     ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, 0, "W", W_0);
@@ -464,8 +464,8 @@ void cartpole_model_acados_setup_nlp_in(cartpole_model_solver_capsule* capsule, 
     double* W = calloc(NY*NY, sizeof(double));
     // change only the non-zero elements:
     W[0+(NY) * 0] = 1000;
-    W[1+(NY) * 1] = 1000;
-    W[2+(NY) * 2] = 0.01;
+    W[1+(NY) * 1] = 1;
+    W[2+(NY) * 2] = 0.001;
     W[3+(NY) * 3] = 0.01;
     W[4+(NY) * 4] = 0.01;
 
@@ -482,8 +482,8 @@ void cartpole_model_acados_setup_nlp_in(cartpole_model_solver_capsule* capsule, 
     double* W_e = calloc(NYN*NYN, sizeof(double));
     // change only the non-zero elements:
     W_e[0+(NYN) * 0] = 1000;
-    W_e[1+(NYN) * 1] = 1000;
-    W_e[2+(NYN) * 2] = 0.01;
+    W_e[1+(NYN) * 1] = 1;
+    W_e[2+(NYN) * 2] = 0.001;
     W_e[3+(NYN) * 3] = 0.01;
     ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, N, "W", W_e);
     free(W_e);

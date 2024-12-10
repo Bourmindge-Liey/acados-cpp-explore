@@ -52,8 +52,8 @@
         "dyn_impl_dae_fun": null,
         "dyn_impl_dae_fun_jac": null,
         "dyn_impl_dae_jac": null,
-        "f_expl_expr": "@1=(1+(0.1*(1-sq(cos(phi))))), @2=(((((-0.05*sin(phi))*sq(d_phi))+((0.981*cos(phi))*sin(phi)))+u_f)/@1), vertcat(@2, d_phi, @2, (2.*((((((-0.05*cos(phi))*sin(phi))*sq(d_phi))+(10.791*sin(phi)))+(u_f*cos(phi)))/@1)))",
-        "f_impl_expr": "@1=(1+(0.1*(1-sq(cos(phi))))), @2=(((((-0.05*sin(phi))*sq(d_phi))+((0.981*cos(phi))*sin(phi)))+u_f)/@1), (vertcat(pos_dot, phi_dot, d_pos_dot, d_phi_dot)-vertcat(@2, d_phi, @2, (2.*((((((-0.05*cos(phi))*sin(phi))*sq(d_phi))+(10.791*sin(phi)))+(u_f*cos(phi)))/@1))))",
+        "f_expl_expr": "@1=(1+(0.1*(1-sq(cos(phi))))), vertcat(d_pos, d_phi, (((((-0.05*sin(phi))*sq(d_phi))+((0.981*cos(phi))*sin(phi)))+u_f)/@1), (2.*((((((-0.05*cos(phi))*sin(phi))*sq(d_phi))+(10.791*sin(phi)))+(u_f*cos(phi)))/@1)))",
+        "f_impl_expr": "@1=(1+(0.1*(1-sq(cos(phi))))), (vertcat(pos_dot, phi_dot, d_pos_dot, d_phi_dot)-vertcat(d_pos, d_phi, (((((-0.05*sin(phi))*sq(d_phi))+((0.981*cos(phi))*sin(phi)))+u_f)/@1), (2.*((((((-0.05*cos(phi))*sin(phi))*sq(d_phi))+(10.791*sin(phi)))+(u_f*cos(phi)))/@1))))",
         "gnsf_nontrivial_f_LO": 1,
         "gnsf_purely_linear": 0,
         "name": "cartpole_model",
@@ -68,7 +68,6 @@
         "x": "vertcat(pos, phi, d_pos, d_phi)",
         "x_labels": null,
         "xdot": "vertcat(pos_dot, phi_dot, d_pos_dot, d_phi_dot)",
-        "y_ref": "vertcat(pos, phi_wrap, d_pos, d_phi)",
         "z": "0x0"
     },
     "parameter_values": [],

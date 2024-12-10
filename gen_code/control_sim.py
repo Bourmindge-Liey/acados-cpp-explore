@@ -4,7 +4,7 @@ from gen_ocp import gen_ocp
 from utils.plot_utils import plot_pendulum
 
 acados_options = get_config_from_file("base_options.yaml")
-ocp, ocp_solver, sim = gen_ocp(acados_options)
+ocp, ocp_solver, acados_sim = gen_ocp(acados_options)
 
 Nsim = 100
 N = ocp_solver.N
@@ -16,10 +16,10 @@ Fmax = ocp.constraints.ubu
 simX = np.zeros((Nsim + 1, nx))
 simU = np.zeros((Nsim, nu))
 
-xcurrent = np.array([1 ,-1, 0, 0])
+xcurrent = np.array([0.1, 0., 0.1, 0])
 simX[0, :] = xcurrent
 
-yref = np.array([1, 0, 0, 0, 0])
+yref = np.array([0, 0, 0, 0, 0])
 yref_N = np.array([0, 0, 0, 0])
 
 # initialize solver
@@ -30,21 +30,22 @@ for stage in range(N):
 
 # closed loop
 for i in range(Nsim):
-    # update yref
+    # setup stage
+    ocp_solver.set(0, "lbx", xcurrent)
+    ocp_solver.set(0, "ubx", xcurrent)
+
     for j in range(N):
         ocp_solver.set(j, "yref", yref)
     ocp_solver.set(N, "yref", yref_N)
 
-    # solve ocp
-    ocp_solver.set(0, "lbx", xcurrent)
-    ocp_solver.set(0, "ubx", xcurrent)
+    # solve
     status = ocp_solver.solve()
     if status != 0:
         print(f"wrong at {i} step")
     simU[i,:] = ocp_solver.get(0, "u")
 
-    # simulate system
-    xcurrent = sim.simulate(xcurrent, simU[i, :])
+    # simulate
+    xcurrent = acados_sim.simulate(xcurrent, simU[i, :])
     simX[i + 1, :] = xcurrent
 
 plot_pendulum(np.linspace(0, Nsim * 0.05, Nsim+1), Fmax, simU, simX, latexify=True)

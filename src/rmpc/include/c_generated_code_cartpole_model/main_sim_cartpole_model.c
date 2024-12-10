@@ -65,16 +65,26 @@ int main()
     double x_current[NX];
     x_current[0] = 0.0;
     x_current[1] = 0.0;
-    x_current[2] = 0.1;
+    x_current[2] = 0.0;
     x_current[3] = 0.0;
+
+  
+    x_current[0] = 0;
+    x_current[1] = 0;
+    x_current[2] = 0;
+    x_current[3] = 0;
+    
+  
 
 
     // initial value for control input
     double u0[NU];
-    u0[0] = 0.1;
+    u0[0] = 0.0;
+
+  
 
 
-    int n_sim_steps = 100;
+    int n_sim_steps = 3;
     // solve ocp in loop
     for (int ii = 0; ii < n_sim_steps; ii++)
     {

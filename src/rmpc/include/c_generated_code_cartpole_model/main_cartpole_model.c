@@ -78,8 +78,8 @@ int main()
     ubx0[0] = 0;
     lbx0[1] = 0;
     ubx0[1] = 0;
-    lbx0[2] = 0.1;
-    ubx0[2] = 0.1;
+    lbx0[2] = 0;
+    ubx0[2] = 0;
     lbx0[3] = 0;
     ubx0[3] = 0;
 
@@ -90,7 +90,7 @@ int main()
     double x_init[NX];
     x_init[0] = 0.0;
     x_init[1] = 0.0;
-    x_init[2] = 0.1;
+    x_init[2] = 0.0;
     x_init[3] = 0.0;
 
     // initial value for control input

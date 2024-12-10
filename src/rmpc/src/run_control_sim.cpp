@@ -14,6 +14,7 @@ int main() {
     // simulate
     double x[NX];
     double u[NU];
+    u[0] = 0.1;
     std::copy(std::begin(x_init), std::end(x_init), x);
 
     double y_ref[N_STEPS][NY];
@@ -32,7 +33,6 @@ int main() {
         rmpc.control(x, u);
         env.step(u, x);
     }
-
 
     return 0;
 }
