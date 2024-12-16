@@ -1,7 +1,13 @@
+#ifndef RMPC_H
+#define RMPC_H
+
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <numeric>
 #include <vector>
+#include <array>
+
 // acados
 #include "acados/utils/print.h"
 #include "acados/utils/math.h"
@@ -53,7 +59,6 @@
 
 #define N_STEPS CARTPOLE_MODEL_N
 
-
 class RMPC {
 
     // acados solver
@@ -66,21 +71,27 @@ class RMPC {
     void *nlp_opts;
 
     // solver status
+    std::array<int, NBX0> idxbx0_;
     int N = CARTPOLE_MODEL_N;
     double* new_time_steps = NULL;
     int status;
 
-    double y_ref[N_STEPS][NY];
-
-    double x_pred[N_STEPS+1][NX];
-    double u_pred[N_STEPS][NU];
+    // nlp solutions
+    std::array<double, NX> x_current;
+    std::array<double, NU> u_current;
+    std::array<std::array<double, NX>, N_STEPS + 1> x_pred;
+    std::array<std::array<double, NU>, N_STEPS> u_pred;
+    std::array<std::array<double, NY>, N_STEPS> y_ref;
 
 public:
 
     // constructor and destructor
-    RMPC(double x_init[NX]);
+    RMPC(std::array<double, NX> &x_init);
     ~RMPC();
 
-    void control(double x[NX], double u[NX]);
-    void set_reference(double y_ref[N_STEPS][NY], double y_ref_e[NX]);
+    void control(std::array<double, NX> &x);
+    std::array<double, NU> get_control();
+    void set_reference(std::array<std::array<double, NY>, N_STEPS> &y_ref, std::array<double, NX> &y_ref_e);
 };
+
+#endif

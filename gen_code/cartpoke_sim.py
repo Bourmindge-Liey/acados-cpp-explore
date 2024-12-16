@@ -9,4 +9,5 @@ def create_sim(model, sim_options):
     sim.model = model
     sim.solver_options.integrator_type = integrator_type  # Explicit Runge-Kutta integrator
     sim.solver_options.T = Ts  # Simulation step size
+    sim.code_export_directory = sim_options['export_dir'] + sim.code_export_directory + "_" + sim.model.name
     return sim

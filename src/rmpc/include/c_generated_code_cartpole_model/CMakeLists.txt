@@ -36,9 +36,6 @@ project(cartpole_model)
 
 # build options.
 
-option(BUILD_ACADOS_SOLVER_LIB "Should the solver library acados_solver_cartpole_model be build?" OFF)
-option(BUILD_ACADOS_OCP_SOLVER_LIB "Should the OCP solver library acados_ocp_solver_cartpole_model be build?" OFF)
-option(BUILD_EXAMPLE "Should the example main_cartpole_model be build?" OFF)
 option(BUILD_SIM_EXAMPLE "Should the simulation example main_sim_cartpole_model be build?" OFF)
 option(BUILD_ACADOS_SIM_SOLVER_LIB "Should the simulation solver library acados_sim_solver_cartpole_model be build?" OFF)
 
@@ -76,31 +73,12 @@ add_library(${MODEL_OBJ} OBJECT ${MODEL_SRC} )
 
 
 
-# optimal control problem - mostly CasADi exports
-if(${BUILD_ACADOS_SOLVER_LIB} OR ${BUILD_ACADOS_OCP_SOLVER_LIB} OR ${BUILD_EXAMPLE})
-    set(OCP_SRC
-        cartpole_model_cost/cartpole_model_cost_y_0_fun.c
-        cartpole_model_cost/cartpole_model_cost_y_0_fun_jac_ut_xt.c
-        cartpole_model_cost/cartpole_model_cost_y_0_hess.c
-        cartpole_model_cost/cartpole_model_cost_y_fun.c
-        cartpole_model_cost/cartpole_model_cost_y_fun_jac_ut_xt.c
-        cartpole_model_cost/cartpole_model_cost_y_hess.c
-        cartpole_model_cost/cartpole_model_cost_y_e_fun.c
-        cartpole_model_cost/cartpole_model_cost_y_e_fun_jac_ut_xt.c
-        cartpole_model_cost/cartpole_model_cost_y_e_hess.c
-        acados_solver_cartpole_model.c
-    )
-    add_library(${OCP_OBJ} OBJECT ${OCP_SRC})
-endif()
 # for sim solver
 if(${BUILD_ACADOS_SOLVER_LIB} OR ${BUILD_EXAMPLE}
     OR ${BUILD_SIM_EXAMPLE} OR ${BUILD_ACADOS_SIM_SOLVER_LIB})
     set(SIM_SRC acados_sim_solver_cartpole_model.c)
     add_library(${SIM_OBJ} OBJECT ${SIM_SRC})
 endif()
-# for target example
-set(EX_SRC main_cartpole_model.c)
-set(EX_EXE main_cartpole_model)
 set(EXTERNAL_DIR)
 set(EXTERNAL_LIB)
 
@@ -132,30 +110,6 @@ else()
 endif()
 
 # the targets
-# bundled_shared_lib
-if(${BUILD_ACADOS_SOLVER_LIB})
-    set(LIB_ACADOS_SOLVER acados_solver_cartpole_model)
-    add_library(${LIB_ACADOS_SOLVER} SHARED $<TARGET_OBJECTS:${MODEL_OBJ}> $<TARGET_OBJECTS:${OCP_OBJ}>
-        $<TARGET_OBJECTS:${SIM_OBJ}>)
-    install(TARGETS ${LIB_ACADOS_SOLVER} DESTINATION ${CMAKE_INSTALL_PREFIX})
-endif(${BUILD_ACADOS_SOLVER_LIB})
-
-# ocp_shared_lib
-if(${BUILD_ACADOS_OCP_SOLVER_LIB})
-    set(LIB_ACADOS_OCP_SOLVER acados_ocp_solver_cartpole_model)
-    add_library(${LIB_ACADOS_OCP_SOLVER} SHARED $<TARGET_OBJECTS:${MODEL_OBJ}> $<TARGET_OBJECTS:${OCP_OBJ}>)
-    # Specify libraries or flags to use when linking a given target and/or its dependents.
-    target_link_libraries(${LIB_ACADOS_OCP_SOLVER} PRIVATE ${EXTERNAL_LIB})
-    target_link_directories(${LIB_ACADOS_OCP_SOLVER} PRIVATE ${EXTERNAL_DIR})
-    install(TARGETS ${LIB_ACADOS_OCP_SOLVER} DESTINATION ${CMAKE_INSTALL_PREFIX})
-endif(${BUILD_ACADOS_OCP_SOLVER_LIB})
-
-# example
-if(${BUILD_EXAMPLE})
-    add_executable(${EX_EXE} ${EX_SRC} $<TARGET_OBJECTS:${MODEL_OBJ}> $<TARGET_OBJECTS:${OCP_OBJ}>
-        $<TARGET_OBJECTS:${SIM_OBJ}>)
-    install(TARGETS ${EX_EXE} DESTINATION ${CMAKE_INSTALL_PREFIX})
-endif(${BUILD_EXAMPLE})
 
 # example_sim
 if(${BUILD_SIM_EXAMPLE})
@@ -173,8 +127,5 @@ if(${BUILD_ACADOS_SIM_SOLVER_LIB})
 endif(${BUILD_ACADOS_SIM_SOLVER_LIB})
 
 # unset options for clean cmake cache on subsequent cmake runs
-unset(BUILD_ACADOS_SOLVER_LIB CACHE)
-unset(BUILD_ACADOS_OCP_SOLVER_LIB CACHE)
-unset(BUILD_EXAMPLE CACHE)
 unset(BUILD_SIM_EXAMPLE CACHE)
 unset(BUILD_ACADOS_SIM_SOLVER_LIB CACHE)

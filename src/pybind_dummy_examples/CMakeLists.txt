@@ -1,12 +1,14 @@
-cmake_minimum_required(VERSION 3.4...3.18)
-project(cmake_example)
+cmake_minimum_required(VERSION 3.12)
+project(pybind_dummy_examples)
 
-find_package(pybind11 REQUIRED)
-pybind11_add_module(cmake_example intro.cpp)
+# Find pybind11
+find_package(ament_cmake REQUIRED)
 
-# EXAMPLE_VERSION_INFO is defined by setup.py and passed into the C++ code as a
-# define (VERSION_INFO) here.
-target_compile_definitions(cmake_example PRIVATE VERSION_INFO=${EXAMPLE_VERSION_INFO})
+find_package(pybind11 CONFIG REQUIRED)
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 
+# Add the pybind11 module
+pybind11_add_module(pybind_dummy_examples intro.cpp)
 
-install()
+ament_export_dependencies(${PKG_DEPENDENCIES})
+ament_package()

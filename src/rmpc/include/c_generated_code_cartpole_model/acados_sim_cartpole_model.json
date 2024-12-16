@@ -1,7 +1,7 @@
 {
     "acados_include_path": "/home/a/acados/include",
     "acados_lib_path": "/home/a/acados/lib",
-    "code_export_directory": "/home/a/ssaa/acados_cpp/c_generated_code",
+    "code_export_directory": "/home/a/ssaa/acados_cpp/src/rmpc/include/c_generated_code_cartpole_model",
     "cython_include_dirs": [
         "/home/a/ssaa/iac_cil_venv/lib/python3.10/site-packages/numpy/_core/include",
         "/usr/include/python3.10"

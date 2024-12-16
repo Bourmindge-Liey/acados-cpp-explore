@@ -39,7 +39,7 @@ def gen_ocp(nmpc_options: dict) -> tuple[AcadosOcp, AcadosOcpSolver, AcadosSimSo
                                 'BUILD_ACADOS_SOLVER_LIB' ]
 
     ocp_solver = AcadosOcpSolver(ocp, json_file=f"{ocp.code_export_directory}/acados_ocp_{model.name}.json", cmake_builder=cmake_builder)
-    sim_solver = AcadosSimSolver(sim, cmake_builder=cmake_builder)
+    sim_solver = AcadosSimSolver(sim, json_file=f"{ocp.code_export_directory}/acados_sim_{model.name}.json", cmake_builder=cmake_builder)
     return ocp, ocp_solver, sim_solver
 
 

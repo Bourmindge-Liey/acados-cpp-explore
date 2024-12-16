@@ -19,6 +19,8 @@ sudo make install
 ```
 
 2. writing cmake files
+* exporting lib name must stay same as the 
+
 ```cmake
 find_package(pybind11 REQUIRED)
 find_package(Python3.11 REQUIRED COMPONENTS Interpreters Development)
@@ -27,5 +29,5 @@ find_package(Python3.11 REQUIRED COMPONENTS Interpreters Development)
 set(MODULE_NAME your_module_name)
 pybind11_add_module(${MODULE_NAME} src/bind_cpp.cpp)
 target_link_libraries(${MODULE_NAME} PRIVATE ${PROJECT_NAME} pybind11::module)
-
 ```
+

@@ -17,7 +17,6 @@ endforeach()
 
 find_package(pybind11 CONFIG REQUIRED)
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
-
 ######################### acados lib #######################
 
 ########## object target names
@@ -116,8 +115,6 @@ install(
 )
 
 
-
-
 set(SIM_NAME sim_env_cartpole)
 add_library(${SIM_NAME} 
   src/sim.cpp
@@ -134,6 +131,7 @@ install(
   INCLUDES DESTINATION include
 )
 
+
 set(CONTROL_SIM_NAME control_cartpole_model)
 add_executable(${CONTROL_SIM_NAME} src/run_control_sim.cpp)
 target_link_libraries(${CONTROL_SIM_NAME} ${PROJECT_NAME} ${SIM_NAME})
@@ -149,20 +147,13 @@ install(
 
 
 set(MODULE_NAME rmpc_bind)
-pybind11_add_module(${MODULE_NAME} src/bind_cpp.cpp )
-target_link_libraries(${MODULE_NAME} PRIVATE ${PROJECT_NAME} pybind11::module)
-install(
-  TARGETS ${MODULE_NAME}
-  EXPORT export_${MODULE_NAME}
-  DESTINATION lib/${MODULE_NAME}
-  LIBRARY DESTINATION lib
-  ARCHIVE DESTINATION lib
-  RUNTIME DESTINATION bin
-  INCLUDES DESTINATION include
-)
+pybind11_add_module(
+  ${MODULE_NAME} src/bind_cpp.cpp   
+  src/rmpc.cpp
+  $<TARGET_OBJECTS:${MODEL_OBJ}> 
+  $<TARGET_OBJECTS:${OCP_OBJ}>)
+
 
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
-
 ament_export_dependencies(${PKG_DEPENDENCIES})
-
 ament_package()
