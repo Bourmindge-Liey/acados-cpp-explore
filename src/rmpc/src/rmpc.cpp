@@ -31,12 +31,13 @@ RMPC::RMPC(std::array<double, NX> &x_init) {
 
     //initialise the reference, states and inputs
     for (int i = 0; i < N_STEPS; i++) {
-        ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, i, "yref", y_ref.begin());
-        ocp_nlp_out_set(nlp_config, nlp_dims, nlp_out, i, "x", x_init.begin());
-        ocp_nlp_out_set(nlp_config, nlp_dims, nlp_out, i, "u", u_pred.begin());
+        ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, i, "yref", y_ref.data());
+        ocp_nlp_out_set(nlp_config, nlp_dims, nlp_out, i, "x", x_init.data());
+        ocp_nlp_out_set(nlp_config, nlp_dims, nlp_out, i, "u", u_pred.data());
     }
     ocp_nlp_out_set(nlp_config, nlp_dims, nlp_out, N_STEPS, "x", &x_init);
 }
+
 
 
 void RMPC::control(std::array<double, NX> &x) {
@@ -44,19 +45,19 @@ void RMPC::control(std::array<double, NX> &x) {
     printf("Computing control\n");
 
     // set initial condition
-    ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, 0, "idxbx", idxbx0_.begin());
-    ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, 0, "lbx", x.begin());
-    ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, 0, "ubx", x.begin());
+    ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, 0, "idxbx", idxbx0_.data());
+    ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, 0, "lbx", x.data());
+    ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, 0, "ubx", x.data());
 
 
     for (int ii = 0; ii < 1; ii++) {
         int rti_phase = 0;
         for (int i = 0; i < N_STEPS; i++)
             {
-                ocp_nlp_out_set(nlp_config, nlp_dims, nlp_out, i, "x", x.begin());
+                ocp_nlp_out_set(nlp_config, nlp_dims, nlp_out, i, "x", x.data());
                 // ocp_nlp_out_set(nlp_config, nlp_dims, nlp_out, i, "u", u_current.begin());
             }
-            ocp_nlp_out_set(nlp_config, nlp_dims, nlp_out, N, "x", x.begin());
+            ocp_nlp_out_set(nlp_config, nlp_dims, nlp_out, N, "x", x.data());
             ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "rti_phase", &rti_phase);
 
         // solve
@@ -68,13 +69,13 @@ void RMPC::control(std::array<double, NX> &x) {
     }
 
     // // get solution
-    ocp_nlp_out_get(nlp_config, nlp_dims, nlp_out, 0, "u", u_current.begin());
-    ocp_nlp_out_get(nlp_config, nlp_dims, nlp_out, 1, "x", x.begin());
+    ocp_nlp_out_get(nlp_config, nlp_dims, nlp_out, 0, "u", u_current.data());
+    ocp_nlp_out_get(nlp_config, nlp_dims, nlp_out, 1, "x", x.data());
     for (int i = 0; i < N_STEPS; i++) {
-        ocp_nlp_out_get(nlp_config, nlp_dims, nlp_out, i, "x", x_pred.begin());
-        ocp_nlp_out_get(nlp_config, nlp_dims, nlp_out, i, "u", u_pred.begin());
+        ocp_nlp_out_get(nlp_config, nlp_dims, nlp_out, i, "x", x_pred.data());
+        ocp_nlp_out_get(nlp_config, nlp_dims, nlp_out, i, "u", u_pred.data());
     }
-    ocp_nlp_out_get(nlp_config, nlp_dims, nlp_out, N_STEPS, "x", x_pred.begin());
+    ocp_nlp_out_get(nlp_config, nlp_dims, nlp_out, N_STEPS, "x", x_pred.data());
     
 }
 
@@ -85,13 +86,11 @@ std::array<double, NU> RMPC::get_control() {
 
 
 void RMPC::set_reference(std::array<std::array<double, NY>, N_STEPS> &y_ref, std::array<double, NX> &y_ref_e) {
-
     printf("Setting reference\n");
-
     for (int i = 0; i < N_STEPS; i++) {
-        ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, i, "yref", y_ref[i].begin());
+        ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, i, "yref", y_ref[i].data());
     }
-    ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, N_STEPS, "yref", y_ref_e.begin());
+    ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, N_STEPS, "yref", y_ref_e.data());
 }
 
 

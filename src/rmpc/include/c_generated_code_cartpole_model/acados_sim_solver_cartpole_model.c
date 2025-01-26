@@ -75,6 +75,10 @@ int cartpole_model_acados_sim_create(cartpole_model_sim_solver_capsule * capsule
 
     double Tsim = 0.05;
 
+    external_function_opts ext_fun_opts;
+    external_function_opts_set_to_default(&ext_fun_opts);
+    ext_fun_opts.external_workspace = false;
+
     
     capsule->sim_impl_dae_fun = (external_function_param_casadi *) malloc(sizeof(external_function_param_casadi));
     capsule->sim_impl_dae_fun_jac_x_xdot_z = (external_function_param_casadi *) malloc(sizeof(external_function_param_casadi));
@@ -86,7 +90,7 @@ int cartpole_model_acados_sim_create(cartpole_model_sim_solver_capsule * capsule
     capsule->sim_impl_dae_fun->casadi_sparsity_out = &cartpole_model_impl_dae_fun_sparsity_out;
     capsule->sim_impl_dae_fun->casadi_n_in = &cartpole_model_impl_dae_fun_n_in;
     capsule->sim_impl_dae_fun->casadi_n_out = &cartpole_model_impl_dae_fun_n_out;
-    external_function_param_casadi_create(capsule->sim_impl_dae_fun, np);
+    external_function_param_casadi_create(capsule->sim_impl_dae_fun, np, &ext_fun_opts);
 
     capsule->sim_impl_dae_fun_jac_x_xdot_z->casadi_fun = &cartpole_model_impl_dae_fun_jac_x_xdot_z;
     capsule->sim_impl_dae_fun_jac_x_xdot_z->casadi_work = &cartpole_model_impl_dae_fun_jac_x_xdot_z_work;
@@ -94,16 +98,15 @@ int cartpole_model_acados_sim_create(cartpole_model_sim_solver_capsule * capsule
     capsule->sim_impl_dae_fun_jac_x_xdot_z->casadi_sparsity_out = &cartpole_model_impl_dae_fun_jac_x_xdot_z_sparsity_out;
     capsule->sim_impl_dae_fun_jac_x_xdot_z->casadi_n_in = &cartpole_model_impl_dae_fun_jac_x_xdot_z_n_in;
     capsule->sim_impl_dae_fun_jac_x_xdot_z->casadi_n_out = &cartpole_model_impl_dae_fun_jac_x_xdot_z_n_out;
-    external_function_param_casadi_create(capsule->sim_impl_dae_fun_jac_x_xdot_z, np);
+    external_function_param_casadi_create(capsule->sim_impl_dae_fun_jac_x_xdot_z, np, &ext_fun_opts);
 
-    // external_function_param_casadi impl_dae_jac_x_xdot_u_z;
     capsule->sim_impl_dae_jac_x_xdot_u_z->casadi_fun = &cartpole_model_impl_dae_jac_x_xdot_u_z;
     capsule->sim_impl_dae_jac_x_xdot_u_z->casadi_work = &cartpole_model_impl_dae_jac_x_xdot_u_z_work;
     capsule->sim_impl_dae_jac_x_xdot_u_z->casadi_sparsity_in = &cartpole_model_impl_dae_jac_x_xdot_u_z_sparsity_in;
     capsule->sim_impl_dae_jac_x_xdot_u_z->casadi_sparsity_out = &cartpole_model_impl_dae_jac_x_xdot_u_z_sparsity_out;
     capsule->sim_impl_dae_jac_x_xdot_u_z->casadi_n_in = &cartpole_model_impl_dae_jac_x_xdot_u_z_n_in;
     capsule->sim_impl_dae_jac_x_xdot_u_z->casadi_n_out = &cartpole_model_impl_dae_jac_x_xdot_u_z_n_out;
-    external_function_param_casadi_create(capsule->sim_impl_dae_jac_x_xdot_u_z, np);
+    external_function_param_casadi_create(capsule->sim_impl_dae_jac_x_xdot_u_z, np, &ext_fun_opts);
 
     
 
@@ -173,7 +176,7 @@ int cartpole_model_acados_sim_create(cartpole_model_sim_solver_capsule * capsule
 
     // sim solver
     sim_solver *cartpole_model_sim_solver = sim_solver_create(cartpole_model_sim_config,
-                                               cartpole_model_sim_dims, cartpole_model_sim_opts);
+                                               cartpole_model_sim_dims, cartpole_model_sim_opts, cartpole_model_sim_in);
     capsule->acados_sim_solver = cartpole_model_sim_solver;
 
 

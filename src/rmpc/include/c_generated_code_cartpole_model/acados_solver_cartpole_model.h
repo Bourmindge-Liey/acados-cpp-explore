@@ -40,6 +40,7 @@
 #define CARTPOLE_MODEL_NZ     0
 #define CARTPOLE_MODEL_NU     1
 #define CARTPOLE_MODEL_NP     0
+#define CARTPOLE_MODEL_NP_GLOBAL     0
 #define CARTPOLE_MODEL_NBX    0
 #define CARTPOLE_MODEL_NBX0   4
 #define CARTPOLE_MODEL_NBU    1
@@ -108,19 +109,16 @@ typedef struct cartpole_model_solver_capsule
 
     external_function_external_param_casadi *cost_y_fun;
     external_function_external_param_casadi *cost_y_fun_jac_ut_xt;
-    external_function_external_param_casadi *cost_y_hess;
 
 
 
     external_function_external_param_casadi cost_y_0_fun;
     external_function_external_param_casadi cost_y_0_fun_jac_ut_xt;
-    external_function_external_param_casadi cost_y_0_hess;
 
 
 
     external_function_external_param_casadi cost_y_e_fun;
     external_function_external_param_casadi cost_y_e_fun_jac_ut_xt;
-    external_function_external_param_casadi cost_y_e_hess;
 
 
     // constraints
@@ -160,7 +158,16 @@ ACADOS_SYMBOL_EXPORT int cartpole_model_acados_update_params_sparse(cartpole_mod
 ACADOS_SYMBOL_EXPORT int cartpole_model_acados_set_p_global_and_precompute_dependencies(cartpole_model_solver_capsule* capsule, double* data, int data_len);
 
 ACADOS_SYMBOL_EXPORT int cartpole_model_acados_solve(cartpole_model_solver_capsule * capsule);
+
 ACADOS_SYMBOL_EXPORT void cartpole_model_acados_batch_solve(cartpole_model_solver_capsule ** capsules, int N_batch);
+
+ACADOS_SYMBOL_EXPORT void cartpole_model_acados_batch_set_flat(cartpole_model_solver_capsule ** capsules, const char *field, double *data, int N_data, int N_batch);
+ACADOS_SYMBOL_EXPORT void cartpole_model_acados_batch_get_flat(cartpole_model_solver_capsule ** capsules, const char *field, double *data, int N_data, int N_batch);
+
+ACADOS_SYMBOL_EXPORT void cartpole_model_acados_batch_eval_solution_sens_adj_p(cartpole_model_solver_capsule ** capsules, const char *field, int stage, double *out, int offset, int N_batch);
+ACADOS_SYMBOL_EXPORT void cartpole_model_acados_batch_eval_params_jac(cartpole_model_solver_capsule ** capsules, int N_batch);
+
+
 ACADOS_SYMBOL_EXPORT int cartpole_model_acados_free(cartpole_model_solver_capsule * capsule);
 ACADOS_SYMBOL_EXPORT void cartpole_model_acados_print_stats(cartpole_model_solver_capsule * capsule);
 ACADOS_SYMBOL_EXPORT int cartpole_model_acados_custom_update(cartpole_model_solver_capsule* capsule, double* data, int data_len);

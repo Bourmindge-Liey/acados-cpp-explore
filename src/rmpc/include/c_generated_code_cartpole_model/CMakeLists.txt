@@ -67,6 +67,8 @@ set(SIM_OBJ sim_cartpole_model)
 set(MODEL_SRC
     cartpole_model_model/cartpole_model_impl_dae_fun.c
     cartpole_model_model/cartpole_model_impl_dae_fun_jac_x_xdot_z.c
+    cartpole_model_model/cartpole_model_impl_dae_fun_jac_x_xdot_u_z.c
+    cartpole_model_model/cartpole_model_impl_dae_fun_jac_x_xdot_u.c
     cartpole_model_model/cartpole_model_impl_dae_jac_x_xdot_u_z.c
 )
 add_library(${MODEL_OBJ} OBJECT ${MODEL_SRC} )
@@ -89,7 +91,7 @@ set(ACADOS_LIB_PATH /home/a/acados/lib CACHE PATH "Define the path which contain
 # c-compiler flags for debugging
 set(CMAKE_C_FLAGS_DEBUG "-O0 -ggdb")
 
-set(CMAKE_C_FLAGS "-fPIC -std=c99  ")
+set(CMAKE_C_FLAGS "-fPIC -std=c99   -O2  ")
 #-fno-diagnostics-show-line-numbers -g
 
 include_directories(

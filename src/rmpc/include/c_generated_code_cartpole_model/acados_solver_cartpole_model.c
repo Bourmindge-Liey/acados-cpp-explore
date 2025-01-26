@@ -51,6 +51,7 @@
 #define NZ     CARTPOLE_MODEL_NZ
 #define NU     CARTPOLE_MODEL_NU
 #define NP     CARTPOLE_MODEL_NP
+#define NP_GLOBAL     CARTPOLE_MODEL_NP_GLOBAL
 #define NY0    CARTPOLE_MODEL_NY0
 #define NY     CARTPOLE_MODEL_NY
 #define NYN    CARTPOLE_MODEL_NYN
@@ -173,6 +174,8 @@ void cartpole_model_acados_create_set_plan(ocp_nlp_plan_t* nlp_solver_plan, cons
     nlp_solver_plan->nlp_constraints[N] = BGH;
 
     nlp_solver_plan->regularization = NO_REGULARIZE;
+
+    nlp_solver_plan->globalization = FIXED_STEP;
 }
 
 
@@ -273,6 +276,9 @@ static ocp_nlp_dims* cartpole_model_acados_create_setup_dimensions(cartpole_mode
     ocp_nlp_dims_set_opt_vars(nlp_config, nlp_dims, "ns", ns);
     ocp_nlp_dims_set_opt_vars(nlp_config, nlp_dims, "np", np);
 
+    ocp_nlp_dims_set_global(nlp_config, nlp_dims, "np_global", 0);
+    ocp_nlp_dims_set_global(nlp_config, nlp_dims, "n_global_data", 0);
+
     for (int i = 0; i <= N; i++)
     {
         ocp_nlp_dims_set_constraints(nlp_config, nlp_dims, i, "nbx", &nbx[i]);
@@ -322,14 +328,17 @@ void cartpole_model_acados_create_setup_functions(cartpole_model_solver_capsule*
         capsule->__CAPSULE_FNC__.casadi_sparsity_in = & __MODEL_BASE_FNC__ ## _sparsity_in; \
         capsule->__CAPSULE_FNC__.casadi_sparsity_out = & __MODEL_BASE_FNC__ ## _sparsity_out; \
         capsule->__CAPSULE_FNC__.casadi_work = & __MODEL_BASE_FNC__ ## _work; \
-        external_function_external_param_casadi_create(&capsule->__CAPSULE_FNC__ ); \
+        external_function_external_param_casadi_create(&capsule->__CAPSULE_FNC__, &ext_fun_opts); \
     } while(false)
 
+    external_function_opts ext_fun_opts;
+    external_function_opts_set_to_default(&ext_fun_opts);
 
+
+    ext_fun_opts.external_workspace = true;
     // nonlinear least squares function
     MAP_CASADI_FNC(cost_y_0_fun, cartpole_model_cost_y_0_fun);
     MAP_CASADI_FNC(cost_y_0_fun_jac_ut_xt, cartpole_model_cost_y_0_fun_jac_ut_xt);
-    MAP_CASADI_FNC(cost_y_0_hess, cartpole_model_cost_y_0_hess);
 
 
 
@@ -362,16 +371,9 @@ void cartpole_model_acados_create_setup_functions(cartpole_model_solver_capsule*
     {
         MAP_CASADI_FNC(cost_y_fun_jac_ut_xt[i], cartpole_model_cost_y_fun_jac_ut_xt);
     }
-
-    capsule->cost_y_hess = (external_function_external_param_casadi *) malloc(sizeof(external_function_external_param_casadi)*(N-1));
-    for (int i = 0; i < N-1; i++)
-    {
-        MAP_CASADI_FNC(cost_y_hess[i], cartpole_model_cost_y_hess);
-    }
     // nonlinear least square function
     MAP_CASADI_FNC(cost_y_e_fun, cartpole_model_cost_y_e_fun);
     MAP_CASADI_FNC(cost_y_e_fun_jac_ut_xt, cartpole_model_cost_y_e_fun_jac_ut_xt);
-    MAP_CASADI_FNC(cost_y_e_hess, cartpole_model_cost_y_e_hess);
 
 #undef MAP_CASADI_FNC
 }
@@ -380,8 +382,13 @@ void cartpole_model_acados_create_setup_functions(cartpole_model_solver_capsule*
 /**
  * Internal function for cartpole_model_acados_create: step 4
  */
-void cartpole_model_acados_create_set_default_parameters(cartpole_model_solver_capsule* capsule) {
+void cartpole_model_acados_create_set_default_parameters(cartpole_model_solver_capsule* capsule)
+{
+
     // no parameters defined
+
+
+    // no global parameters defined
 }
 
 
@@ -403,20 +410,51 @@ void cartpole_model_acados_setup_nlp_in(cartpole_model_solver_capsule* capsule, 
 //    capsule->nlp_in = nlp_in;
     ocp_nlp_in * nlp_in = capsule->nlp_in;
 
-    // set up time_steps
+    // set up time_steps and cost_scaling
 
     if (new_time_steps)
     {
+        // NOTE: this sets scaling and time_steps
         cartpole_model_acados_update_time_steps(capsule, N, new_time_steps);
     }
     else
-    {double time_step = 0.05;
+    {
+        // set time_steps
+    double time_step = 0.05;
         for (int i = 0; i < N; i++)
         {
             ocp_nlp_in_set(nlp_config, nlp_dims, nlp_in, i, "Ts", &time_step);
-            ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, i, "scaling", &time_step);
         }
+        // set cost scaling
+        double* cost_scaling = malloc((N+1)*sizeof(double));
+        cost_scaling[0] = 0.05;
+        cost_scaling[1] = 0.05;
+        cost_scaling[2] = 0.05;
+        cost_scaling[3] = 0.05;
+        cost_scaling[4] = 0.05;
+        cost_scaling[5] = 0.05;
+        cost_scaling[6] = 0.05;
+        cost_scaling[7] = 0.05;
+        cost_scaling[8] = 0.05;
+        cost_scaling[9] = 0.05;
+        cost_scaling[10] = 0.05;
+        cost_scaling[11] = 0.05;
+        cost_scaling[12] = 0.05;
+        cost_scaling[13] = 0.05;
+        cost_scaling[14] = 0.05;
+        cost_scaling[15] = 0.05;
+        cost_scaling[16] = 0.05;
+        cost_scaling[17] = 0.05;
+        cost_scaling[18] = 0.05;
+        cost_scaling[19] = 0.05;
+        cost_scaling[20] = 1;
+        for (int i = 0; i <= N; i++)
+        {
+            ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, i, "scaling", &cost_scaling[i]);
+        }
+        free(cost_scaling);
     }
+
 
     /**** Dynamics ****/
     for (int i = 0; i < N; i++)
@@ -489,16 +527,13 @@ void cartpole_model_acados_setup_nlp_in(cartpole_model_solver_capsule* capsule, 
     free(W_e);
     ocp_nlp_cost_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, 0, "nls_y_fun", &capsule->cost_y_0_fun);
     ocp_nlp_cost_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, 0, "nls_y_fun_jac", &capsule->cost_y_0_fun_jac_ut_xt);
-    ocp_nlp_cost_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, 0, "nls_y_hess", &capsule->cost_y_0_hess);
     for (int i = 1; i < N; i++)
     {
         ocp_nlp_cost_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, i, "nls_y_fun", &capsule->cost_y_fun[i-1]);
         ocp_nlp_cost_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, i, "nls_y_fun_jac", &capsule->cost_y_fun_jac_ut_xt[i-1]);
-        ocp_nlp_cost_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, i, "nls_y_hess", &capsule->cost_y_hess[i-1]);
     }
     ocp_nlp_cost_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, N, "nls_y_fun", &capsule->cost_y_e_fun);
     ocp_nlp_cost_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, N, "nls_y_fun_jac", &capsule->cost_y_e_fun_jac_ut_xt);
-    ocp_nlp_cost_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, N, "nls_y_hess", &capsule->cost_y_e_hess);
 
 
 
@@ -527,7 +562,6 @@ void cartpole_model_acados_setup_nlp_in(cartpole_model_solver_capsule* capsule, 
     free(lubx0);
     // idxbxe_0
     int* idxbxe_0 = malloc(4 * sizeof(int));
-    
     idxbxe_0[0] = 0;
     idxbxe_0[1] = 1;
     idxbxe_0[2] = 2;
@@ -545,12 +579,10 @@ void cartpole_model_acados_setup_nlp_in(cartpole_model_solver_capsule* capsule, 
     /* constraints that are the same for initial and intermediate */
     // u
     int* idxbu = malloc(NBU * sizeof(int));
-    
     idxbu[0] = 0;
     double* lubu = calloc(2*NBU, sizeof(double));
     double* lbu = lubu;
     double* ubu = lubu + NBU;
-    
     lbu[0] = -10;
     ubu[0] = 10;
 
@@ -578,18 +610,10 @@ void cartpole_model_acados_setup_nlp_in(cartpole_model_solver_capsule* capsule, 
     double* lug = calloc(2*NG, sizeof(double));
     double* lg = lug;
     double* ug = lug + NG;
-
-    
-
-    
     C[0+NG * 0] = 1;
     C[1+NG * 2] = 1;
-
-    
     lg[0] = -10;
     lg[1] = -10;
-
-    
     ug[0] = 10;
     ug[1] = 10;
 
@@ -613,12 +637,10 @@ void cartpole_model_acados_setup_nlp_in(cartpole_model_solver_capsule* capsule, 
     // set up bounds for last stage
     // x
     int* idxbx_e = malloc(NBXN * sizeof(int));
-    
     idxbx_e[0] = 0;
     double* lubx_e = calloc(2*NBXN, sizeof(double));
     double* lbx_e = lubx_e;
     double* ubx_e = lubx_e + NBXN;
-    
     lbx_e[0] = -5;
     ubx_e[0] = 5;
     ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, N, "idxbx", idxbx_e);
@@ -651,17 +673,25 @@ static void cartpole_model_acados_create_set_opts(cartpole_model_solver_capsule*
     *  opts
     ************************************************/
 
-int fixed_hess = 0;
+
+
+    int fixed_hess = 0;
     ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "fixed_hess", &fixed_hess);
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "globalization", "fixed_step");
-int with_solution_sens_wrt_params = false;
+
+    double globalization_fixed_step_length = 1;
+    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "globalization_fixed_step_length", &globalization_fixed_step_length);
+
+
+
+
+    int with_solution_sens_wrt_params = false;
     ocp_nlp_solver_opts_set(nlp_config, capsule->nlp_opts, "with_solution_sens_wrt_params", &with_solution_sens_wrt_params);
 
     int with_value_sens_wrt_params = false;
     ocp_nlp_solver_opts_set(nlp_config, capsule->nlp_opts, "with_value_sens_wrt_params", &with_value_sens_wrt_params);
 
-    int full_step_dual = 0;
-    ocp_nlp_solver_opts_set(nlp_config, capsule->nlp_opts, "full_step_dual", &full_step_dual);
+    int globalization_full_step_dual = 0;
+    ocp_nlp_solver_opts_set(nlp_config, capsule->nlp_opts, "globalization_full_step_dual", &globalization_full_step_dual);
 
     // set collocation type (relevant for implicit integrators)
     sim_collocation_type collocation_type = GAUSS_LEGENDRE;
@@ -684,13 +714,14 @@ int with_solution_sens_wrt_params = false;
     for (int i = 0; i < N; i++)
         ocp_nlp_solver_opts_set_at_stage(nlp_config, nlp_opts, i, "dynamics_newton_iter", &newton_iter_val);
 
+    double newton_tol_val = 0;
+    for (int i = 0; i < N; i++)
+        ocp_nlp_solver_opts_set_at_stage(nlp_config, nlp_opts, i, "dynamics_newton_tol", &newton_tol_val);
+
     // set up sim_method_jac_reuse
     bool tmp_bool = (bool) 0;
     for (int i = 0; i < N; i++)
         ocp_nlp_solver_opts_set_at_stage(nlp_config, nlp_opts, i, "dynamics_jac_reuse", &tmp_bool);
-
-    double nlp_solver_step_length = 1;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "step_length", &nlp_solver_step_length);
 
     double levenberg_marquardt = 0;
     ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "levenberg_marquardt", &levenberg_marquardt);
@@ -702,6 +733,9 @@ int with_solution_sens_wrt_params = false;
 
     int nlp_solver_ext_qp_res = 0;
     ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "ext_qp_res", &nlp_solver_ext_qp_res);
+
+    bool store_iterates = false;
+    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "store_iterates", &store_iterates);
     int log_primal_step_norm = false;
     ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "log_primal_step_norm", &log_primal_step_norm);
 
@@ -778,7 +812,6 @@ void cartpole_model_acados_set_nlp_out(cartpole_model_solver_capsule* capsule)
     double* x0 = xu0;
 
     // initialize with x0
-    
 
 
     double* u0 = xu0 + NX;
@@ -794,14 +827,6 @@ void cartpole_model_acados_set_nlp_out(cartpole_model_solver_capsule* capsule)
     free(xu0);
 }
 
-
-/**
- * Internal function for cartpole_model_acados_create: step 8
- */
-//void cartpole_model_acados_create_8_create_solver(cartpole_model_solver_capsule* capsule)
-//{
-//    capsule->nlp_solver = ocp_nlp_solver_create(capsule->nlp_config, capsule->nlp_dims, capsule->nlp_opts);
-//}
 
 /**
  * Internal function for cartpole_model_acados_create: step 9
@@ -853,7 +878,7 @@ int cartpole_model_acados_create_with_discretization(cartpole_model_solver_capsu
     cartpole_model_acados_create_set_default_parameters(capsule);
 
     // 6) create solver
-    capsule->nlp_solver = ocp_nlp_solver_create(capsule->nlp_config, capsule->nlp_dims, capsule->nlp_opts);
+    capsule->nlp_solver = ocp_nlp_solver_create(capsule->nlp_config, capsule->nlp_dims, capsule->nlp_opts, capsule->nlp_in);
 
     // 7) create and set nlp_out
     // 7.1) nlp_out
@@ -884,7 +909,7 @@ int cartpole_model_acados_update_qp_solver_cond_N(cartpole_model_solver_capsule*
 
     // 3) continue with the remaining steps from cartpole_model_acados_create_with_discretization(...):
     // -> 8) create solver
-    capsule->nlp_solver = ocp_nlp_solver_create(capsule->nlp_config, capsule->nlp_dims, capsule->nlp_opts);
+    capsule->nlp_solver = ocp_nlp_solver_create(capsule->nlp_config, capsule->nlp_dims, capsule->nlp_opts, capsule->nlp_in);
 
     // -> 9) do precomputations
     int status = cartpole_model_acados_create_precompute(capsule);
@@ -917,13 +942,13 @@ int cartpole_model_acados_reset(cartpole_model_solver_capsule* capsule, int rese
         if (i<N)
         {
             ocp_nlp_out_set(nlp_config, nlp_dims, nlp_out, i, "pi", buffer);
-            ocp_nlp_set(nlp_config, nlp_solver, i, "xdot_guess", buffer);
-            ocp_nlp_set(nlp_config, nlp_solver, i, "z_guess", buffer);
+            ocp_nlp_set(nlp_solver, i, "xdot_guess", buffer);
+            ocp_nlp_set(nlp_solver, i, "z_guess", buffer);
         }
     }
     // get qp_status: if NaN -> reset memory
     int qp_status;
-    ocp_nlp_get(capsule->nlp_config, capsule->nlp_solver, "qp_status", &qp_status);
+    ocp_nlp_get(capsule->nlp_solver, "qp_status", &qp_status);
     if (reset_qp_solver_mem || (qp_status == 3))
     {
         // printf("\nin reset qp_status %d -> resetting QP memory\n", qp_status);
@@ -992,6 +1017,77 @@ void cartpole_model_acados_batch_solve(cartpole_model_solver_capsule ** capsules
 }
 
 
+void cartpole_model_acados_batch_eval_params_jac(cartpole_model_solver_capsule ** capsules, int N_batch)
+{
+
+    for (int i = 0; i < N_batch; i++)
+    {
+        ocp_nlp_eval_params_jac(capsules[i]->nlp_solver, capsules[i]->nlp_in, capsules[i]->nlp_out);
+    }
+
+
+    return;
+}
+
+
+
+void cartpole_model_acados_batch_eval_solution_sens_adj_p(cartpole_model_solver_capsule ** capsules, const char *field, int stage, double *out, int offset, int N_batch)
+{
+
+
+    for (int i = 0; i < N_batch; i++)
+    {
+        ocp_nlp_eval_solution_sens_adj_p(capsules[i]->nlp_solver, capsules[i]->nlp_in, capsules[i]->sens_out, field, stage, out + i*offset);
+    }
+
+
+    return;
+}
+
+
+void cartpole_model_acados_batch_set_flat(cartpole_model_solver_capsule ** capsules, const char *field, double *data, int N_data, int N_batch)
+{
+    int offset = ocp_nlp_dims_get_total_from_attr(capsules[0]->nlp_solver->config, capsules[0]->nlp_solver->dims, field);
+
+    if (N_batch*offset != N_data)
+    {
+        printf("batch_set_flat: wrong input dimension, expected %d, got %d\n", N_batch*offset, N_data);
+        exit(1);
+    }
+
+
+    for (int i = 0; i < N_batch; i++)
+    {
+        ocp_nlp_set_all(capsules[i]->nlp_solver, capsules[i]->nlp_in, capsules[i]->nlp_out, field, data + i * offset);
+    }
+
+
+    return;
+}
+
+
+
+void cartpole_model_acados_batch_get_flat(cartpole_model_solver_capsule ** capsules, const char *field, double *data, int N_data, int N_batch)
+{
+    int offset = ocp_nlp_dims_get_total_from_attr(capsules[0]->nlp_solver->config, capsules[0]->nlp_solver->dims, field);
+
+    if (N_batch*offset != N_data)
+    {
+        printf("batch_get_flat: wrong input dimension, expected %d, got %d\n", N_batch*offset, N_data);
+        exit(1);
+    }
+
+
+    for (int i = 0; i < N_batch; i++)
+    {
+        ocp_nlp_get_all(capsules[i]->nlp_solver, capsules[i]->nlp_in, capsules[i]->nlp_out, field, data + i * offset);
+    }
+
+
+    return;
+}
+
+
 int cartpole_model_acados_free(cartpole_model_solver_capsule* capsule)
 {
     // before destroying, keep some info
@@ -1021,19 +1117,15 @@ int cartpole_model_acados_free(cartpole_model_solver_capsule* capsule)
     // cost
     external_function_external_param_casadi_free(&capsule->cost_y_0_fun);
     external_function_external_param_casadi_free(&capsule->cost_y_0_fun_jac_ut_xt);
-    external_function_external_param_casadi_free(&capsule->cost_y_0_hess);
     for (int i = 0; i < N - 1; i++)
     {
         external_function_external_param_casadi_free(&capsule->cost_y_fun[i]);
         external_function_external_param_casadi_free(&capsule->cost_y_fun_jac_ut_xt[i]);
-        external_function_external_param_casadi_free(&capsule->cost_y_hess[i]);
     }
     free(capsule->cost_y_fun);
     free(capsule->cost_y_fun_jac_ut_xt);
-    free(capsule->cost_y_hess);
     external_function_external_param_casadi_free(&capsule->cost_y_e_fun);
     external_function_external_param_casadi_free(&capsule->cost_y_e_fun_jac_ut_xt);
-    external_function_external_param_casadi_free(&capsule->cost_y_e_hess);
 
     // constraints
 
@@ -1046,13 +1138,13 @@ int cartpole_model_acados_free(cartpole_model_solver_capsule* capsule)
 void cartpole_model_acados_print_stats(cartpole_model_solver_capsule* capsule)
 {
     int nlp_iter, stat_m, stat_n, tmp_int;
-    ocp_nlp_get(capsule->nlp_config, capsule->nlp_solver, "nlp_iter", &nlp_iter);
-    ocp_nlp_get(capsule->nlp_config, capsule->nlp_solver, "stat_n", &stat_n);
-    ocp_nlp_get(capsule->nlp_config, capsule->nlp_solver, "stat_m", &stat_m);
+    ocp_nlp_get(capsule->nlp_solver, "nlp_iter", &nlp_iter);
+    ocp_nlp_get(capsule->nlp_solver, "stat_n", &stat_n);
+    ocp_nlp_get(capsule->nlp_solver, "stat_m", &stat_m);
 
-    
+
     double stat[1200];
-    ocp_nlp_get(capsule->nlp_config, capsule->nlp_solver, "statistics", stat);
+    ocp_nlp_get(capsule->nlp_solver, "statistics", stat);
 
     int nrow = nlp_iter+1 < stat_m ? nlp_iter+1 : stat_m;
 

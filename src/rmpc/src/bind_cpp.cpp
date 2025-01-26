@@ -4,8 +4,6 @@ namespace py=pybind11;
 
 #include "rmpc/rmpc.h"
 
-namespace py = pybind11;
-
 PYBIND11_MODULE(rmpc_bind, m) {
     py::class_<RMPC>(m, "RMPC", py::dynamic_attr())
         .def(py::init<std::array<double, NX> &>())
