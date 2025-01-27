@@ -7,10 +7,13 @@ from acados_template import AcadosModel
 def create_model(model_options: dict) -> AcadosModel:
 
     ###################### model parameters ###############
-    m_c = model_options['m_cart']
-    m_p = model_options['m_pole']
-    l_p = model_options['l_pole']
-    g = model_options['g']
+    p_global = MX.sym("p_global", 4)
+    m_c = p_global[0]
+    m_p = p_global[1]
+    l_p = p_global[2]
+    g = p_global[3]
+
+
 
     ###################### states ####################### 
     pos = MX.sym("pos")         # position of the cart [m]
@@ -55,6 +58,7 @@ def create_model(model_options: dict) -> AcadosModel:
     model.u = u
     model.xdot = xdot
     model.p = p
+    model.p_global = p_global
     model.z = z 
     model.f_expl_expr = f_expl
     model.f_impl_expr = f_impl

@@ -3,6 +3,7 @@ import os, sys, yaml
 project_root = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(project_root)
 
+import numpy as np
 from acados_template import AcadosOcp, AcadosOcpSolver, AcadosSimSolver
 from acados_template.builders import CMakeBuilder, ocp_get_default_cmake_builder, sim_get_default_cmake_builder
 from cartpole_model import create_model
@@ -25,6 +26,7 @@ def gen_ocp(nmpc_options: dict) -> tuple[AcadosOcp, AcadosOcpSolver, AcadosSimSo
     with open(ocp_options_path) as f:
         ocp_options = yaml.load(f, yaml.FullLoader)
     ocp = create_ocp(model, ocp_options)
+    ocp.p_global_values = np.array([model_options['m_cart'], model_options['m_pole'], model_options['l_pole'], model_options['g']])
 
     sim_options_path = os.path.join(os.getcwd(), nmpc_options['config_path'], nmpc_options['ocp_param_file']) 
     with open(sim_options_path) as f:
